@@ -1,0 +1,49 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+  padding-top: 2rem;
+}
+
+.profilePictureContainer {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--border);
+}
+
+.profilePicture {
+  object-fit: cover;
+}
+
+.textContainer {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.fullName {
+  font-size: 1.875rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.jobTitle {
+  font-size: 1rem;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.professionalJourney {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--foreground);
+  max-width: 600px;
+  text-align: center;
+}
+

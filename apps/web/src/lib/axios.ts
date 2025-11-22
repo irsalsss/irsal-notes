@@ -1,0 +1,70 @@
+import axios, { type AxiosRequestConfig } from 'axios';
+
+export const AXIOS_INSTANCE = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001',
+});
+
+type CancellablePromise<T> = Promise<T> & {
+  cancel: () => void;
+};
+
+// Helper function to convert RequestInit headers to axios headers format
+export const convertHeaders = (headers?: HeadersInit): Record<string, string> | undefined => {
+  if (!headers) return undefined;
+  
+  if (headers instanceof Headers) {
+    const result: Record<string, string> = {};
+    headers.forEach((value, key) => {
+      result[key] = value;
+    });
+    return result;
+  }
+  
+  if (Array.isArray(headers)) {
+    return Object.fromEntries(headers);
+  }
+  
+  return headers as Record<string, string>;
+};
+
+// Helper function to convert RequestInit to AxiosRequestConfig
+export const convertRequestInitToAxiosConfig = (
+  url: string,
+  options?: RequestInit
+): AxiosRequestConfig => {
+  const config: AxiosRequestConfig = {
+    url,
+    method: options?.method as any,
+    headers: convertHeaders(options?.headers),
+    signal: options?.signal || undefined,
+  };
+
+  // Convert body to data for axios
+  if (options?.body) {
+    if (typeof options.body === 'string') {
+      try {
+        config.data = JSON.parse(options.body);
+      } catch {
+        config.data = options.body;
+      }
+    } else {
+      config.data = options.body;
+    }
+  }
+
+  return config;
+};
+
+export const customInstance = <T>(config: AxiosRequestConfig): CancellablePromise<T> => {
+  const source = axios.CancelToken.source();
+  const promise = AXIOS_INSTANCE({ ...config, cancelToken: source.token }).then(
+    ({ data }) => data,
+  ) as CancellablePromise<T>;
+
+  promise.cancel = () => {
+    source.cancel('Query was cancelled');
+  };
+
+  return promise;
+};
+

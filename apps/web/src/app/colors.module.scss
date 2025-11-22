@@ -1,0 +1,85 @@
+/* ============================================
+   COLOR DESIGN SYSTEM
+   ============================================ */
+
+:root {
+  /* Base Colors - Light Mode */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  
+  /* Neutral Palette */
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f5f5f5;
+  --color-neutral-200: #e5e5e5;
+  --color-neutral-300: #d4d4d4;
+  --color-neutral-400: #a3a3a3;
+  --color-neutral-500: #737373;
+  --color-neutral-600: #525252;
+  --color-neutral-700: #404040;
+  --color-neutral-800: #262626;
+  --color-neutral-900: #171717;
+  --color-neutral-950: #0a0a0a;
+  
+  /* Semantic Colors - Light Mode */
+  --color-background: var(--color-white);
+  --color-foreground: var(--color-neutral-900);
+  --color-muted: var(--color-neutral-500);
+  --color-muted-foreground: var(--color-neutral-600);
+  --color-border: var(--color-neutral-200);
+  --color-border-subtle: var(--color-neutral-100);
+  --color-accent: var(--color-neutral-900);
+  --color-accent-foreground: var(--color-white);
+  
+  /* Interactive States */
+  --color-hover: var(--color-neutral-50);
+  --color-active: var(--color-neutral-100);
+  --color-focus-ring: var(--color-neutral-400);
+  
+  /* Typography Colors */
+  --color-heading: var(--color-neutral-950);
+  --color-body: var(--color-neutral-900);
+  --color-caption: var(--color-neutral-500);
+  --color-link: var(--color-neutral-900);
+  --color-link-hover: var(--color-neutral-600);
+  
+  /* Status Colors */
+  --color-success: #22c55e;
+  --color-error: #ef4444;
+  --color-warning: #f59e0b;
+  --color-info: #3b82f6;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Semantic Colors - Dark Mode */
+    --color-background: var(--color-neutral-950);
+    --color-foreground: var(--color-neutral-50);
+    --color-muted: var(--color-neutral-400);
+    --color-muted-foreground: var(--color-neutral-300);
+    --color-border: var(--color-neutral-800);
+    --color-border-subtle: var(--color-neutral-900);
+    --color-accent: var(--color-neutral-50);
+    --color-accent-foreground: var(--color-neutral-950);
+    
+    /* Interactive States - Dark Mode */
+    --color-hover: var(--color-neutral-900);
+    --color-active: var(--color-neutral-800);
+    --color-focus-ring: var(--color-neutral-600);
+    
+    /* Typography Colors - Dark Mode */
+    --color-heading: var(--color-neutral-50);
+    --color-body: var(--color-neutral-100);
+    --color-caption: var(--color-neutral-400);
+    --color-link: var(--color-neutral-100);
+    --color-link-hover: var(--color-neutral-300);
+  }
+}
+
+/* Legacy Support (for existing components) */
+:root {
+  --background: var(--color-background);
+  --foreground: var(--color-foreground);
+  --muted: var(--color-muted);
+  --border: var(--color-border);
+}
+

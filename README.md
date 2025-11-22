@@ -2,13 +2,83 @@
 
 This Turborepo starter is maintained by the Turborepo core team.
 
-## Using this example
+## How to Run
 
-Run the following command:
+### Prerequisites
 
-```sh
-npx create-turbo@latest
+- **Node.js** (v18+)
+- **pnpm** (Package manager)
+- **PostgreSQL** (Database)
+
+### Steps
+
+1.  **Install Dependencies**
+
+    Run the following command in the root directory:
+
+    ```bash
+    pnpm install
+    ```
+
+2.  **Set up the Database (PostgreSQL)**
+
+    Make sure you have a PostgreSQL database running. You will need the connection string (URL).
+
+3.  **Configure Environment Variables for API**
+
+    Create a `.env` file in `apps/api/`:
+
+    ```bash
+    # apps/api/.env
+    DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/DB_NAME?schema=public"
+    ```
+
+    *Replace `USER`, `PASSWORD`, and `DB_NAME` with your actual database credentials.*
+
+4.  **Run Database Migrations**
+
+    Initialize the database schema:
+
+    ```bash
+    cd apps/api
+    npx prisma migrate dev --name init
+    cd ../..
+    ```
+
+5.  **Start the Development Server**
+
+    From the root directory, run:
+
+    ```bash
+    pnpm dev
+    ```
+
+    This command uses Turborepo to start both applications:
+    - **Web App**: `http://localhost:3000`
+    - **API Server**: `http://localhost:3001`
+
+### Generate Swagger JSON
+
+The `swagger.json` file is automatically generated when building the API. To generate it manually:
+
+**Option 1: Build the API (automatically generates swagger.json)**
+
+```bash
+cd apps/api
+pnpm build
 ```
+
+**Option 2: Generate swagger.json directly**
+
+After building the API, you can run the swagger generator:
+
+```bash
+cd apps/api
+pnpm build
+node dist/generate-swagger
+```
+
+The `swagger.json` file will be created in `apps/api/swagger.json`. This file is used by the web app to generate TypeScript API client code (via Orval).
 
 ## What's inside?
 
