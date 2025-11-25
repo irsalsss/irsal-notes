@@ -6,15 +6,18 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiTags, ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
 import { ArticleService } from './article.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { Article } from './entities/article.entity';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('articles')
 @ApiTags('articles')
+@UseGuards(AuthGuard)
 export class ArticleController {
   constructor(private readonly articleService: ArticleService) {}
 

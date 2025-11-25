@@ -80,6 +80,8 @@ node dist/generate-swagger
 
 The `swagger.json` file will be created in `apps/api/swagger.json`. This file is used by the web app to generate TypeScript API client code (via Orval).
 
+Once started, the swagger will be accessible at: http://localhost:3001/api
+
 ## What's inside?
 
 This Turborepo includes the following packages/apps:
