@@ -1,33 +1,29 @@
-/* Example: How to use the typography mixin in your SCSS modules */
-
-// Import the typography module to use the mixin
 @use './typography.module.scss' as *;
 
-.example-heading {
-  @include apply-typography('3xl', 'semibold', 'snug', 'tight');
-}
+.container {
+  .example-heading {
+    @include apply-typography('3xl', 'semibold', 'snug', 'tight');
+  }
 
-.example-body {
-  @include apply-typography('base', 'normal', 'relaxed');
-}
+  .example-body {
+    @include apply-typography('base', 'normal', 'relaxed');
+  }
 
-.example-caption {
-  @include apply-typography('sm', 'normal', 'normal');
-  color: var(--color-caption);
-}
+  .example-caption {
+    @include apply-typography('sm', 'normal', 'normal');
+    color: var(--color-caption);
+  }
 
-// You can also use custom values
-.example-custom {
-  @include apply-typography('2xl', 500, 1.4, 'normal', 'sans');
-}
+  .example-custom {
+    @include apply-typography('2xl', 500, 1.4, 'normal', 'sans');
+  }
 
-// Minimal usage - just size
-.simple-text {
-  @include apply-typography('lg');
-}
+  .simple-text {
+    @include apply-typography('lg');
+  }
 
-// With weight only
-.bold-text {
-  @include apply-typography('base', 'bold');
+  .bold-text {
+    @include apply-typography('base', 'bold');
+  }
 }
 

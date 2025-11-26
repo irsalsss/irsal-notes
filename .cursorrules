@@ -1,0 +1,44 @@
+# Cursor AI Rules for irsal-notes
+
+## 1. Engineering Approach
+- Think like a lead engineer: be smart, thoughtful, and consider best practices
+- Consider edge cases, performance implications, and maintainability
+- Write clean, well-structured code that follows established patterns
+- Think about the broader context and how changes affect the system
+
+## 2. CSS Module Class Name Access
+- Always use bracket notation for CSS module class names
+- ✅ Correct: `className={styles['panel']}`
+- ❌ Incorrect: `className={styles.panel}`
+- This applies to all CSS module imports (`.module.scss`, `.module.css`)
+
+## 3. SCSS Nesting
+- Always use SCSS nesting syntax instead of flat CSS
+- ✅ Correct:
+  ```scss
+  .container {
+    display: flex;
+    
+    .item {
+      padding: 1rem;
+      
+      &:hover {
+        background: blue;
+      }
+    }
+  }
+  ```
+- ❌ Incorrect:
+  ```scss
+  .container {
+    display: flex;
+  }
+  .container .item {
+    padding: 1rem;
+  }
+  .container .item:hover {
+    background: blue;
+  }
+  ```
+- Prefer nested selectors for better organization and readability
+
