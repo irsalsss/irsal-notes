@@ -264,6 +264,20 @@
         ]
       }
     },
+    "/auth/sign_out": {
+      "post": {
+        "operationId": "AuthController_signOut",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Sign out successful"
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
     "/users": {
       "post": {
         "operationId": "UsersController_create",

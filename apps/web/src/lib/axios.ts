@@ -1,8 +1,26 @@
-import axios, { type AxiosRequestConfig, Method } from 'axios';
+import axios, { type AxiosRequestConfig, Method, type AxiosError } from 'axios';
 
 export const AXIOS_INSTANCE = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001',
+  withCredentials: true,
 });
+
+AXIOS_INSTANCE.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error: AxiosError) => {
+    if (error.response?.status === 401) {
+      if (typeof window !== 'undefined') {
+        const currentPath = window.location.pathname;
+        if (!currentPath.startsWith('/auth')) {
+          window.location.href = '/auth/sign-in';
+        }
+      }
+    }
+    return Promise.reject(error);
+  }
+);
 
 type CancellablePromise<T> = Promise<T> & {
   cancel: () => void;

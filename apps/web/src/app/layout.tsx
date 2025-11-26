@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import Providers from '@/components/providers';
+import { AuthGuard } from '@/components/auth-guard';
 import './globals.scss';
 
 const geistSans = Geist({
@@ -31,7 +32,9 @@ export default function RootLayout({
           MozOsxFontSmoothing: 'grayscale',
         }}
       >
-        <Providers>{children}</Providers>
+        <Providers>
+          <AuthGuard>{children}</AuthGuard>
+        </Providers>
       </body>
     </html>
   );

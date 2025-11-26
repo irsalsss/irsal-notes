@@ -4,8 +4,10 @@ import {
   Get,
   Post,
   Request,
+  Res,
   UseGuards,
 } from '@nestjs/common';
+import { Response } from 'express';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { SignInDto } from './dto/sign-in.dto';
@@ -17,6 +19,8 @@ import {
 } from '@nestjs/swagger';
 import { User } from 'src/users/entities/user.entity';
 import { AuthGuard, RequestWithUser } from './auth.guard';
+
+const EXPIRATION_TIME = 60 * 60 * 1000; // 60 minutes
 
 @Controller('auth')
 @ApiTags('auth')
@@ -32,13 +36,41 @@ export class AuthController {
   @Post('sign_in')
   @ApiBody({ type: SignInDto })
   @ApiOkResponse({ type: User })
-  signIn(@Body() signInDto: SignInDto) {
-    return this.authService.signIn(signInDto.email, signInDto.password);
+  async signIn(
+    @Body() signInDto: SignInDto,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    const result = await this.authService.signIn(
+      signInDto.email,
+      signInDto.password,
+    );
+
+    // Set httpOnly cookie with the access token
+    response.cookie('access_token', result.access_token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: EXPIRATION_TIME,
+    });
+
+    return { message: 'Sign in successful' };
   }
 
   @UseGuards(AuthGuard)
   @Get('profile')
   getProfile(@Request() req: RequestWithUser): RequestWithUser['user'] {
     return req.user;
+  }
+
+  @Post('sign_out')
+  @ApiOkResponse({ description: 'Sign out successful' })
+  signOut(@Res({ passthrough: true }) response: Response) {
+    response.clearCookie('access_token', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+    });
+
+    return { message: 'Sign out successful' };
   }
 }
