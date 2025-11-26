@@ -8,7 +8,13 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { SignInDto } from './dto/sign-in.dto';
+import {
+  ApiBody,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { User } from 'src/users/entities/user.entity';
 import { AuthGuard, RequestWithUser } from './auth.guard';
 
@@ -24,8 +30,9 @@ export class AuthController {
   }
 
   @Post('sign_in')
+  @ApiBody({ type: SignInDto })
   @ApiOkResponse({ type: User })
-  signIn(@Body() signInDto: Record<string, string>) {
+  signIn(@Body() signInDto: SignInDto) {
     return this.authService.signIn(signInDto.email, signInDto.password);
   }
 

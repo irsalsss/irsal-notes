@@ -23,17 +23,21 @@ export function ExampleHydratedQuery() {
   return (
     <div
       style={{
-        padding: '1rem',
-        border: '1px solid #e5e7eb',
-        borderRadius: '0.5rem',
+        padding: 'var(--spacing-4)',
+        border: `1px solid var(--color-border)`,
+        borderRadius: 'var(--radius-lg)',
       }}
     >
-      <h2 style={{ fontWeight: 600, marginBottom: '0.5rem' }}>
+      <h2 style={{ fontWeight: 600, marginBottom: 'var(--spacing-2)' }}>
         Hydrated Query Example
       </h2>
       <p>{data?.message}</p>
       <p
-        style={{ fontSize: '0.875rem', color: '#4b5563', marginTop: '0.5rem' }}
+        style={{
+          fontSize: 'var(--font-size-sm)',
+          color: 'var(--color-body-muted)',
+          marginTop: 'var(--spacing-2)',
+        }}
       >
         This data was prefetched on the server and hydrated on the client!
       </p>

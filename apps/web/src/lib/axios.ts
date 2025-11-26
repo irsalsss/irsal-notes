@@ -52,7 +52,11 @@ export const convertRequestInitToAxiosConfig = (
   return config;
 };
 
-export const customInstance = <T>(config: AxiosRequestConfig): CancellablePromise<T> => {
+export const customInstance = <T>(
+  url: string,
+  options?: RequestInit,
+): CancellablePromise<T> => {
+  const config = convertRequestInitToAxiosConfig(url, options);
   const source = axios.CancelToken.source();
   const promise = AXIOS_INSTANCE({ ...config, cancelToken: source.token }).then(
     ({ data }) => data,

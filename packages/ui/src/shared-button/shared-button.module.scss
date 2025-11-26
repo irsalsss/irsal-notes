@@ -69,7 +69,7 @@
   }
 
   &.destructive {
-    color: var(--color-error-foreground, #fff);
+    color: var(--color-error-foreground);
     background-color: var(--color-error);
 
     &:hover:not(:disabled) {

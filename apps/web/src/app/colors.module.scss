@@ -3,11 +3,15 @@
    ============================================ */
 
 :root {
-  /* Base Colors - Light Mode */
+  /* ============================================
+     BASE COLORS
+     ============================================ */
   --color-white: #ffffff;
   --color-black: #000000;
   
-  /* Neutral Palette */
+  /* ============================================
+     NEUTRAL PALETTE
+     ============================================ */
   --color-neutral-50: #fafafa;
   --color-neutral-100: #f5f5f5;
   --color-neutral-200: #e5e5e5;
@@ -20,7 +24,9 @@
   --color-neutral-900: #171717;
   --color-neutral-950: #0a0a0a;
   
-  /* Semantic Colors - Light Mode */
+  /* ============================================
+     SEMANTIC COLORS - Light Mode
+     ============================================ */
   --color-background: var(--color-white);
   --color-foreground: var(--color-neutral-900);
   --color-muted: var(--color-neutral-500);
@@ -29,29 +35,62 @@
   --color-border-subtle: var(--color-neutral-100);
   --color-accent: var(--color-neutral-900);
   --color-accent-foreground: var(--color-white);
+  --color-secondary: var(--color-neutral-100);
   
-  /* Interactive States */
+  /* ============================================
+     INTERACTIVE STATES - Light Mode
+     ============================================ */
   --color-hover: var(--color-neutral-50);
   --color-active: var(--color-neutral-100);
   --color-focus-ring: var(--color-neutral-400);
   
-  /* Typography Colors */
+  /* ============================================
+     TYPOGRAPHY COLORS - Light Mode
+     ============================================ */
   --color-heading: var(--color-neutral-950);
   --color-body: var(--color-neutral-900);
+  --color-body-muted: var(--color-neutral-600);
   --color-caption: var(--color-neutral-500);
   --color-link: var(--color-neutral-900);
   --color-link-hover: var(--color-neutral-600);
   
-  /* Status Colors */
+  /* ============================================
+     STATUS COLORS
+     ============================================ */
   --color-success: #22c55e;
-  --color-error: #ef4444;
+  --color-success-foreground: var(--color-white);
+  --color-success-alt: #10b981;
+  
+  --color-error: #dc2626;
+  --color-error-foreground: var(--color-white);
+  
   --color-warning: #f59e0b;
+  --color-warning-foreground: var(--color-white);
+  
   --color-info: #3b82f6;
+  --color-info-foreground: var(--color-white);
+  --color-info-hover: #2563eb;
+  
+  /* ============================================
+     OVERLAY COLORS - Light Mode
+     ============================================ */
+  --color-overlay: rgba(0, 0, 0, 0.5);
+  --color-overlay-dark: rgba(0, 0, 0, 0.7);
+  
+  /* ============================================
+     SHADOW COLORS - Light Mode
+     ============================================ */
+  --color-shadow-light: rgba(0, 0, 0, 0.05);
+  --color-shadow-base: rgba(0, 0, 0, 0.1);
+  --color-shadow-medium: rgba(0, 0, 0, 0.1);
+  --color-shadow-dark: rgba(0, 0, 0, 0.1);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    /* Semantic Colors - Dark Mode */
+    /* ============================================
+       SEMANTIC COLORS - Dark Mode
+       ============================================ */
     --color-background: var(--color-neutral-950);
     --color-foreground: var(--color-neutral-50);
     --color-muted: var(--color-neutral-400);
@@ -60,26 +99,49 @@
     --color-border-subtle: var(--color-neutral-900);
     --color-accent: var(--color-neutral-50);
     --color-accent-foreground: var(--color-neutral-950);
+    --color-secondary: var(--color-neutral-800);
     
-    /* Interactive States - Dark Mode */
+    /* ============================================
+       INTERACTIVE STATES - Dark Mode
+       ============================================ */
     --color-hover: var(--color-neutral-900);
     --color-active: var(--color-neutral-800);
     --color-focus-ring: var(--color-neutral-600);
     
-    /* Typography Colors - Dark Mode */
+    /* ============================================
+       TYPOGRAPHY COLORS - Dark Mode
+       ============================================ */
     --color-heading: var(--color-neutral-50);
     --color-body: var(--color-neutral-100);
+    --color-body-muted: var(--color-neutral-400);
     --color-caption: var(--color-neutral-400);
     --color-link: var(--color-neutral-100);
     --color-link-hover: var(--color-neutral-300);
+    
+    /* ============================================
+       OVERLAY COLORS - Dark Mode
+       ============================================ */
+    --color-overlay: rgba(0, 0, 0, 0.7);
+    --color-overlay-dark: rgba(0, 0, 0, 0.85);
+    
+    /* ============================================
+       SHADOW COLORS - Dark Mode
+       ============================================ */
+    --color-shadow-light: rgba(0, 0, 0, 0.3);
+    --color-shadow-base: rgba(0, 0, 0, 0.4);
+    --color-shadow-medium: rgba(0, 0, 0, 0.4);
+    --color-shadow-dark: rgba(0, 0, 0, 0.4);
   }
 }
 
-/* Legacy Support (for existing components) */
+/* ============================================
+   LEGACY SUPPORT (for existing components)
+   ============================================ */
 :root {
   --background: var(--color-background);
   --foreground: var(--color-foreground);
   --muted: var(--color-muted);
   --border: var(--color-border);
+  --color-primary: var(--color-accent);
 }
 

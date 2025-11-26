@@ -1,13 +1,36 @@
 'use client';
 
 import Link from 'next/link';
-import { AuthForm } from '@/components/auth-form/auth-form';
+import { AuthForm } from '@/components/auth-form';
 import styles from './sign-up-panel.module.scss';
+import { useAuthControllerSignUp } from '@/features/api/auth/auth';
+import { SignUpDto } from '@/features/api/model';
+import { showNotification } from '@repo/ui';
+import { useRouter } from 'next/navigation';
 
 const SignUpPanel = () => {
-  const handleSignUp = (data: { email: string; password: string }) => {
-    console.log('Sign up submitted:', data);
-    // TODO: Implement sign up logic
+  const router = useRouter();
+
+  const { mutate: signUp } = useAuthControllerSignUp();
+  const handleSignUp = (data: SignUpDto) => {
+    signUp(
+      { data },
+      {
+        onSuccess: () => {
+          showNotification({
+            message: 'Sign up successful',
+            variant: 'success',
+          });
+          router.push('/');
+        },
+        onError: () => {
+          showNotification({
+            message: 'Sign up failed',
+            variant: 'error',
+          });
+        },
+      }
+    );
   };
 
   return (
@@ -15,7 +38,7 @@ const SignUpPanel = () => {
       <div className={styles['content']}>
         <h1 className={styles['heading']}>Sign Up</h1>
 
-        <AuthForm onSubmit={handleSignUp} submitLabel="Sign Up" />
+        <AuthForm onSubmitAuth={handleSignUp} submitLabel="Sign Up" />
 
         <div className={styles['linkContainer']}>
           Already have an account?{' '}

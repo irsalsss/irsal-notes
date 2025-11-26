@@ -1,5 +1,5 @@
 import type { CreateUserDto as CreateUserDtoType } from '@repo/types';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsString, IsNotEmpty, IsEmail, IsOptional } from 'class-validator';
 
 export class CreateUserDto implements CreateUserDtoType {
@@ -19,7 +19,7 @@ export class CreateUserDto implements CreateUserDtoType {
   @IsNotEmpty()
   password: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'The name of the user',
     example: 'John Doe',
   })

@@ -37,21 +37,26 @@ export class UsersService {
     // Hash the password with bcrypt (salt rounds = 10 is a good default)
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
 
-    return this.prisma.user.create({
-      data: {
-        email,
-        password: hashedPassword,
-        name,
-      },
-      // Exclude password from the response for security
-      select: {
-        id: true,
-        email: true,
-        name: true,
-        createdAt: true,
-        updatedAt: true,
-      },
-    });
+    try {
+      return await this.prisma.user.create({
+        data: {
+          email,
+          password: hashedPassword,
+          name,
+        },
+        // Exclude password from the response for security
+        select: {
+          id: true,
+          email: true,
+          name: true,
+          createdAt: true,
+          updatedAt: true,
+        },
+      });
+    } catch (error) {
+      console.error('Error creating user:', error);
+      return null;
+    }
   }
 
   async verifyPassword(
@@ -66,9 +71,18 @@ export class UsersService {
    * Note: This includes password hash - use carefully!
    */
   async findByEmail(email: string) {
-    return this.prisma.user.findUnique({
-      where: { email },
-    });
+    if (!email) {
+      return null;
+    }
+
+    try {
+      return await this.prisma.user.findUnique({
+        where: { email },
+      });
+    } catch (error) {
+      console.error('Error finding user by email:', error);
+      return null;
+    }
   }
 
   async update(

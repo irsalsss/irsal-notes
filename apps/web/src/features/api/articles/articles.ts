@@ -26,11 +26,14 @@ import type {
 
 import type {
   Article,
-  CreateArticleDto
+  CreateArticleDto,
+  UpdateArticleDto
 } from '.././model';
 
-import { customInstance, convertRequestInitToAxiosConfig, convertHeaders } from '../../../lib/axios';
+import { customInstance } from '../../../lib/axios';
 
+
+type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
 
 
@@ -55,30 +58,30 @@ export const getArticleControllerCreateUrl = () => {
 }
 
 export const articleControllerCreate = async (createArticleDto: CreateArticleDto, options?: RequestInit): Promise<articleControllerCreateResponse> => {
-  const headers = convertHeaders(options?.headers) || {};
-  return customInstance<articleControllerCreateResponse>(
-    convertRequestInitToAxiosConfig(getArticleControllerCreateUrl(), {
-      ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...headers },
-      body: JSON.stringify(createArticleDto)
-    })
-  );
-}
+  
+  return customInstance<articleControllerCreateResponse>(getArticleControllerCreateUrl(),
+  {      
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      createArticleDto,)
+  }
+);}
 
 
 
 
 export const getArticleControllerCreateMutationOptions = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof articleControllerCreate>>, TError,{data: CreateArticleDto}, TContext>, }
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof articleControllerCreate>>, TError,{data: CreateArticleDto}, TContext>, request?: SecondParameter<typeof customInstance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof articleControllerCreate>>, TError,{data: CreateArticleDto}, TContext> => {
 
 const mutationKey = ['articleControllerCreate'];
-const {mutation: mutationOptions} = options ?
+const {mutation: mutationOptions, request: requestOptions} = options ?
       options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
       options
       : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }};
+      : {mutation: { mutationKey, }, request: undefined};
 
       
 
@@ -86,7 +89,7 @@ const {mutation: mutationOptions} = options ?
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof articleControllerCreate>>, {data: CreateArticleDto}> = (props) => {
           const {data} = props ?? {};
 
-          return  articleControllerCreate(data,)
+          return  articleControllerCreate(data,requestOptions)
         }
 
         
@@ -99,7 +102,7 @@ const {mutation: mutationOptions} = options ?
     export type ArticleControllerCreateMutationError = unknown
 
     export const useArticleControllerCreate = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof articleControllerCreate>>, TError,{data: CreateArticleDto}, TContext>, }
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof articleControllerCreate>>, TError,{data: CreateArticleDto}, TContext>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof articleControllerCreate>>,
         TError,
@@ -109,7 +112,7 @@ const {mutation: mutationOptions} = options ?
 
       const mutationOptions = getArticleControllerCreateMutationOptions(options);
 
-      return useMutation(mutationOptions, queryClient);
+      return useMutation(mutationOptions);
     }
     export type articleControllerFindAllResponse200 = {
   data: Article[]
@@ -133,13 +136,14 @@ export const getArticleControllerFindAllUrl = () => {
 
 export const articleControllerFindAll = async ( options?: RequestInit): Promise<articleControllerFindAllResponse> => {
   
-  return customInstance<articleControllerFindAllResponse>(
-    convertRequestInitToAxiosConfig(getArticleControllerFindAllUrl(), {
-      ...options,
-      method: 'GET'
-    })
-  );
-}
+  return customInstance<articleControllerFindAllResponse>(getArticleControllerFindAllUrl(),
+  {      
+    ...options,
+    method: 'GET'
+    
+    
+  }
+);}
 
 
 
@@ -152,16 +156,16 @@ export const getArticleControllerFindAllQueryKey = () => {
     }
 
     
-export const getArticleControllerFindAllQueryOptions = <TData = Awaited<ReturnType<typeof articleControllerFindAll>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof articleControllerFindAll>>, TError, TData>>, }
+export const getArticleControllerFindAllQueryOptions = <TData = Awaited<ReturnType<typeof articleControllerFindAll>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof articleControllerFindAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
 ) => {
 
-const {query: queryOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getArticleControllerFindAllQueryKey();
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof articleControllerFindAll>>> = ({ signal }) => articleControllerFindAll({ signal });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof articleControllerFindAll>>> = ({ signal }) => articleControllerFindAll({ signal, ...requestOptions });
 
       
 
@@ -181,7 +185,7 @@ export function useArticleControllerFindAll<TData = Awaited<ReturnType<typeof ar
           TError,
           Awaited<ReturnType<typeof articleControllerFindAll>>
         > , 'initialData'
-      >, }
+      >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useArticleControllerFindAll<TData = Awaited<ReturnType<typeof articleControllerFindAll>>, TError = unknown>(
@@ -191,22 +195,22 @@ export function useArticleControllerFindAll<TData = Awaited<ReturnType<typeof ar
           TError,
           Awaited<ReturnType<typeof articleControllerFindAll>>
         > , 'initialData'
-      >, }
+      >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useArticleControllerFindAll<TData = Awaited<ReturnType<typeof articleControllerFindAll>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof articleControllerFindAll>>, TError, TData>>, }
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof articleControllerFindAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 
 export function useArticleControllerFindAll<TData = Awaited<ReturnType<typeof articleControllerFindAll>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof articleControllerFindAll>>, TError, TData>>, }
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof articleControllerFindAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
   const queryOptions = getArticleControllerFindAllQueryOptions(options)
 
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
@@ -236,13 +240,14 @@ export const getArticleControllerFindDraftsUrl = () => {
 
 export const articleControllerFindDrafts = async ( options?: RequestInit): Promise<articleControllerFindDraftsResponse> => {
   
-  return customInstance<articleControllerFindDraftsResponse>(
-    convertRequestInitToAxiosConfig(getArticleControllerFindDraftsUrl(), {
-      ...options,
-      method: 'GET'
-    })
-  );
-}
+  return customInstance<articleControllerFindDraftsResponse>(getArticleControllerFindDraftsUrl(),
+  {      
+    ...options,
+    method: 'GET'
+    
+    
+  }
+);}
 
 
 
@@ -255,16 +260,16 @@ export const getArticleControllerFindDraftsQueryKey = () => {
     }
 
     
-export const getArticleControllerFindDraftsQueryOptions = <TData = Awaited<ReturnType<typeof articleControllerFindDrafts>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof articleControllerFindDrafts>>, TError, TData>>, }
+export const getArticleControllerFindDraftsQueryOptions = <TData = Awaited<ReturnType<typeof articleControllerFindDrafts>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof articleControllerFindDrafts>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
 ) => {
 
-const {query: queryOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getArticleControllerFindDraftsQueryKey();
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof articleControllerFindDrafts>>> = ({ signal }) => articleControllerFindDrafts({ signal });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof articleControllerFindDrafts>>> = ({ signal }) => articleControllerFindDrafts({ signal, ...requestOptions });
 
       
 
@@ -284,7 +289,7 @@ export function useArticleControllerFindDrafts<TData = Awaited<ReturnType<typeof
           TError,
           Awaited<ReturnType<typeof articleControllerFindDrafts>>
         > , 'initialData'
-      >, }
+      >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useArticleControllerFindDrafts<TData = Awaited<ReturnType<typeof articleControllerFindDrafts>>, TError = unknown>(
@@ -294,22 +299,22 @@ export function useArticleControllerFindDrafts<TData = Awaited<ReturnType<typeof
           TError,
           Awaited<ReturnType<typeof articleControllerFindDrafts>>
         > , 'initialData'
-      >, }
+      >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useArticleControllerFindDrafts<TData = Awaited<ReturnType<typeof articleControllerFindDrafts>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof articleControllerFindDrafts>>, TError, TData>>, }
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof articleControllerFindDrafts>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 
 export function useArticleControllerFindDrafts<TData = Awaited<ReturnType<typeof articleControllerFindDrafts>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof articleControllerFindDrafts>>, TError, TData>>, }
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof articleControllerFindDrafts>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
   const queryOptions = getArticleControllerFindDraftsQueryOptions(options)
 
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
@@ -339,13 +344,14 @@ export const getArticleControllerFindOneUrl = (id: string,) => {
 
 export const articleControllerFindOne = async (id: string, options?: RequestInit): Promise<articleControllerFindOneResponse> => {
   
-  return customInstance<articleControllerFindOneResponse>(
-    convertRequestInitToAxiosConfig(getArticleControllerFindOneUrl(id), {
-      ...options,
-      method: 'GET'
-    })
-  );
-}
+  return customInstance<articleControllerFindOneResponse>(getArticleControllerFindOneUrl(id),
+  {      
+    ...options,
+    method: 'GET'
+    
+    
+  }
+);}
 
 
 
@@ -358,16 +364,16 @@ export const getArticleControllerFindOneQueryKey = (id?: string,) => {
     }
 
     
-export const getArticleControllerFindOneQueryOptions = <TData = Awaited<ReturnType<typeof articleControllerFindOne>>, TError = unknown>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof articleControllerFindOne>>, TError, TData>>, }
+export const getArticleControllerFindOneQueryOptions = <TData = Awaited<ReturnType<typeof articleControllerFindOne>>, TError = unknown>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof articleControllerFindOne>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
 ) => {
 
-const {query: queryOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getArticleControllerFindOneQueryKey(id);
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof articleControllerFindOne>>> = ({ signal }) => articleControllerFindOne(id, { signal });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof articleControllerFindOne>>> = ({ signal }) => articleControllerFindOne(id, { signal, ...requestOptions });
 
       
 
@@ -387,7 +393,7 @@ export function useArticleControllerFindOne<TData = Awaited<ReturnType<typeof ar
           TError,
           Awaited<ReturnType<typeof articleControllerFindOne>>
         > , 'initialData'
-      >, }
+      >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useArticleControllerFindOne<TData = Awaited<ReturnType<typeof articleControllerFindOne>>, TError = unknown>(
@@ -397,22 +403,22 @@ export function useArticleControllerFindOne<TData = Awaited<ReturnType<typeof ar
           TError,
           Awaited<ReturnType<typeof articleControllerFindOne>>
         > , 'initialData'
-      >, }
+      >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useArticleControllerFindOne<TData = Awaited<ReturnType<typeof articleControllerFindOne>>, TError = unknown>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof articleControllerFindOne>>, TError, TData>>, }
+ id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof articleControllerFindOne>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 
 export function useArticleControllerFindOne<TData = Awaited<ReturnType<typeof articleControllerFindOne>>, TError = unknown>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof articleControllerFindOne>>, TError, TData>>, }
+ id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof articleControllerFindOne>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
   const queryOptions = getArticleControllerFindOneQueryOptions(id,options)
 
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
@@ -440,37 +446,40 @@ export const getArticleControllerUpdateUrl = (id: string,) => {
   return `/articles/${id}`
 }
 
-export const articleControllerUpdate = async (id: string, options?: RequestInit): Promise<articleControllerUpdateResponse> => {
+export const articleControllerUpdate = async (id: string,
+    updateArticleDto: UpdateArticleDto, options?: RequestInit): Promise<articleControllerUpdateResponse> => {
   
-  return customInstance<articleControllerUpdateResponse>(
-    convertRequestInitToAxiosConfig(getArticleControllerUpdateUrl(id), {
-      ...options,
-      method: 'PATCH'
-    })
-  );
-}
+  return customInstance<articleControllerUpdateResponse>(getArticleControllerUpdateUrl(id),
+  {      
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      updateArticleDto,)
+  }
+);}
 
 
 
 
 export const getArticleControllerUpdateMutationOptions = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof articleControllerUpdate>>, TError,{id: string}, TContext>, }
-): UseMutationOptions<Awaited<ReturnType<typeof articleControllerUpdate>>, TError,{id: string}, TContext> => {
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof articleControllerUpdate>>, TError,{id: string;data: UpdateArticleDto}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof articleControllerUpdate>>, TError,{id: string;data: UpdateArticleDto}, TContext> => {
 
 const mutationKey = ['articleControllerUpdate'];
-const {mutation: mutationOptions} = options ?
+const {mutation: mutationOptions, request: requestOptions} = options ?
       options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
       options
       : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }};
+      : {mutation: { mutationKey, }, request: undefined};
 
       
 
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof articleControllerUpdate>>, {id: string}> = (props) => {
-          const {id} = props ?? {};
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof articleControllerUpdate>>, {id: string;data: UpdateArticleDto}> = (props) => {
+          const {id,data} = props ?? {};
 
-          return  articleControllerUpdate(id,)
+          return  articleControllerUpdate(id,data,requestOptions)
         }
 
         
@@ -479,21 +488,21 @@ const {mutation: mutationOptions} = options ?
   return  { mutationFn, ...mutationOptions }}
 
     export type ArticleControllerUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof articleControllerUpdate>>>
-    
+    export type ArticleControllerUpdateMutationBody = UpdateArticleDto
     export type ArticleControllerUpdateMutationError = unknown
 
     export const useArticleControllerUpdate = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof articleControllerUpdate>>, TError,{id: string}, TContext>, }
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof articleControllerUpdate>>, TError,{id: string;data: UpdateArticleDto}, TContext>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof articleControllerUpdate>>,
         TError,
-        {id: string},
+        {id: string;data: UpdateArticleDto},
         TContext
       > => {
 
       const mutationOptions = getArticleControllerUpdateMutationOptions(options);
 
-      return useMutation(mutationOptions, queryClient);
+      return useMutation(mutationOptions);
     }
     export type articleControllerRemoveResponse200 = {
   data: Article
@@ -517,27 +526,28 @@ export const getArticleControllerRemoveUrl = (id: string,) => {
 
 export const articleControllerRemove = async (id: string, options?: RequestInit): Promise<articleControllerRemoveResponse> => {
   
-  return customInstance<articleControllerRemoveResponse>(
-    convertRequestInitToAxiosConfig(getArticleControllerRemoveUrl(id), {
-      ...options,
-      method: 'DELETE'
-    })
-  );
-}
+  return customInstance<articleControllerRemoveResponse>(getArticleControllerRemoveUrl(id),
+  {      
+    ...options,
+    method: 'DELETE'
+    
+    
+  }
+);}
 
 
 
 
 export const getArticleControllerRemoveMutationOptions = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof articleControllerRemove>>, TError,{id: string}, TContext>, }
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof articleControllerRemove>>, TError,{id: string}, TContext>, request?: SecondParameter<typeof customInstance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof articleControllerRemove>>, TError,{id: string}, TContext> => {
 
 const mutationKey = ['articleControllerRemove'];
-const {mutation: mutationOptions} = options ?
+const {mutation: mutationOptions, request: requestOptions} = options ?
       options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
       options
       : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }};
+      : {mutation: { mutationKey, }, request: undefined};
 
       
 
@@ -545,7 +555,7 @@ const {mutation: mutationOptions} = options ?
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof articleControllerRemove>>, {id: string}> = (props) => {
           const {id} = props ?? {};
 
-          return  articleControllerRemove(id,)
+          return  articleControllerRemove(id,requestOptions)
         }
 
         
@@ -558,7 +568,7 @@ const {mutation: mutationOptions} = options ?
     export type ArticleControllerRemoveMutationError = unknown
 
     export const useArticleControllerRemove = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof articleControllerRemove>>, TError,{id: string}, TContext>, }
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof articleControllerRemove>>, TError,{id: string}, TContext>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof articleControllerRemove>>,
         TError,
@@ -568,6 +578,6 @@ const {mutation: mutationOptions} = options ?
 
       const mutationOptions = getArticleControllerRemoveMutationOptions(options);
 
-      return useMutation(mutationOptions, queryClient);
+      return useMutation(mutationOptions);
     }
     

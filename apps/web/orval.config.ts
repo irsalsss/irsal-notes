@@ -14,6 +14,11 @@ export default defineConfig({
           path: 'src/lib/axios.ts',
           name: 'customInstance',
         },
+        query: {
+          useQuery: true,
+          useMutation: true,
+          signal: true,
+        },
       },
     },
   },

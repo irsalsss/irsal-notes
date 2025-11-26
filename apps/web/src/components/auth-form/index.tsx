@@ -3,47 +3,49 @@
 import { useForm } from 'react-hook-form';
 import styles from './auth-form.module.scss';
 import { SharedInput, SharedButton } from '@repo/ui';
+import {
+  EMAIL_REQUIRED_MESSAGE,
+  EMAIL_INVALID_MESSAGE,
+  PASSWORD_REQUIRED_MESSAGE,
+  PASSWORD_MIN_LENGTH_MESSAGE,
+} from './constants';
+import { SignInDto, SignUpDto } from '@/features/api/model';
 
-export interface AuthFormData {
-  email: string;
-  password: string;
-}
+type AuthFormData = SignInDto | SignUpDto;
 
 export interface AuthFormProps {
-  onSubmit?: (data: AuthFormData) => void;
-  submitLabel?: string;
+  onSubmitAuth?: (data: AuthFormData) => void;
+  submitLabel: string;
 }
 
-export const AuthForm = ({
-  onSubmit,
-  submitLabel = 'Submit',
-}: AuthFormProps) => {
+export const AuthForm = ({ onSubmitAuth, submitLabel }: AuthFormProps) => {
   const {
     register,
-    handleSubmit: handleFormSubmit,
+    handleSubmit,
     formState: { errors },
   } = useForm<AuthFormData>({
+    mode: 'all',
     defaultValues: {
       email: '',
       password: '',
     },
   });
 
-  const onSubmitForm = (data: AuthFormData) => {
-    onSubmit?.(data);
+  const handleSubmitAuth = (data: AuthFormData) => {
+    onSubmitAuth?.(data);
   };
 
   return (
-    <form className={styles.form} onSubmit={handleFormSubmit(onSubmitForm)}>
+    <form className={styles.form} onSubmit={handleSubmit(handleSubmitAuth)}>
       <SharedInput
         id="email"
         label="Email"
         type="email"
         register={register('email', {
-          required: 'Email is required',
+          required: EMAIL_REQUIRED_MESSAGE,
           pattern: {
             value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-            message: 'Invalid email address',
+            message: EMAIL_INVALID_MESSAGE,
           },
         })}
         error={errors.email?.message}
@@ -56,10 +58,10 @@ export const AuthForm = ({
         label="Password"
         type="password"
         register={register('password', {
-          required: 'Password is required',
+          required: PASSWORD_REQUIRED_MESSAGE,
           minLength: {
             value: 6,
-            message: 'Password must be at least 6 characters',
+            message: PASSWORD_MIN_LENGTH_MESSAGE,
           },
         })}
         error={errors.password?.message}

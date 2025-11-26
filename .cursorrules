@@ -10,6 +10,8 @@
 - Always use bracket notation for CSS module class names
 - ✅ Correct: `className={styles['panel']}`
 - ❌ Incorrect: `className={styles.panel}`
+- ✅ Correct: `className={styles.panel-container}`
+- ❌ Incorrect: `className={styles['panelContainer']}`
 - This applies to all CSS module imports (`.module.scss`, `.module.css`)
 
 ## 3. SCSS Nesting

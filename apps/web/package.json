@@ -7,10 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "codegen": "orval"
+    "codegen": "orval && pnpm exec tsx scripts/fix-generated-api.ts"
   },
   "dependencies": {
-    "@radix-ui/react-dialog": "^1.1.15",
     "@repo/types": "workspace:*",
     "@repo/ui": "workspace:*",
     "@tanstack/react-query": "^5.90.10",
@@ -33,6 +32,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.0.3",
     "orval": "8.0.0-rc.2",
+    "tsx": "^4.20.6",
     "typescript": "^5"
   }
 }

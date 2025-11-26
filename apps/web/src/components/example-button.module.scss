@@ -7,20 +7,20 @@
   border: none;
   
   &.primary {
-    background-color: #3b82f6;
-    color: white;
+    background-color: var(--color-info);
+    color: var(--color-info-foreground);
     
     &:hover {
-      background-color: #2563eb;
+      background-color: var(--color-info-hover);
     }
   }
   
   &.secondary {
-    background-color: #e5e7eb;
-    color: #1f2937;
+    background-color: var(--color-border);
+    color: var(--color-foreground);
     
     &:hover {
-      background-color: #d1d5db;
+      background-color: var(--color-neutral-300);
     }
   }
 }
