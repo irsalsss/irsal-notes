@@ -10,7 +10,14 @@ export class AuthService {
   ) {}
 
   async signUp(email: string, password: string) {
-    return this.usersService.create(email, password);
+    const user = await this.usersService.create(email, password);
+
+    // Generate access token for the newly created user
+    const payload = { email: user.email, sub: user.id };
+    return {
+      user,
+      access_token: this.jwtService.sign(payload),
+    };
   }
 
   async signIn(email: string, currentPassword: string) {

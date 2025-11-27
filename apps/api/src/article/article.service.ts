@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
@@ -7,32 +11,63 @@ import { UpdateArticleDto } from './dto/update-article.dto';
 export class ArticleService {
   constructor(private prisma: PrismaService) {}
 
-  create(createArticleDto: CreateArticleDto) {
+  create(createArticleDto: CreateArticleDto, userId: number) {
     return this.prisma.article.create({
-      data: createArticleDto,
+      data: {
+        ...createArticleDto,
+        userId,
+      },
     });
   }
 
-  findAll() {
-    return this.prisma.article.findMany({ where: { published: true } });
+  findAll(userId: number) {
+    return this.prisma.article.findMany({
+      where: {
+        published: true,
+        userId,
+      },
+    });
   }
 
-  findDrafts() {
-    return this.prisma.article.findMany({ where: { published: false } });
+  findDrafts(userId: number) {
+    return this.prisma.article.findMany({
+      where: {
+        published: false,
+        userId,
+      },
+    });
   }
 
-  findOne(id: number) {
-    return this.prisma.article.findUnique({ where: { id } });
+  async findOne(id: number, userId: number) {
+    const article = await this.prisma.article.findUnique({
+      where: { id },
+    });
+
+    if (!article) {
+      throw new NotFoundException(`Article with ID ${id} not found`);
+    }
+
+    if (article.userId !== userId) {
+      throw new ForbiddenException('You do not have access to this article');
+    }
+
+    return article;
   }
 
-  update(id: number, updateArticleDto: UpdateArticleDto) {
+  async update(id: number, updateArticleDto: UpdateArticleDto, userId: number) {
+    await this.findOne(id, userId);
+
     return this.prisma.article.update({
       where: { id },
       data: updateArticleDto,
     });
   }
 
-  remove(id: number) {
-    return this.prisma.article.delete({ where: { id } });
+  async remove(id: number, userId: number) {
+    await this.findOne(id, userId);
+
+    return this.prisma.article.delete({
+      where: { id },
+    });
   }
 }

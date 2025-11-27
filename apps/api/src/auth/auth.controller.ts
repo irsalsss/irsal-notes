@@ -29,8 +29,24 @@ export class AuthController {
 
   @Post('sign_up')
   @ApiCreatedResponse({ type: User })
-  signUp(@Body() signUpDto: CreateUserDto) {
-    return this.authService.signUp(signUpDto.email, signUpDto.password);
+  async signUp(
+    @Body() signUpDto: CreateUserDto,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    const result = await this.authService.signUp(
+      signUpDto.email,
+      signUpDto.password,
+    );
+
+    // Set httpOnly cookie with the access token
+    response.cookie('access_token', result.access_token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: EXPIRATION_TIME,
+    });
+
+    return { message: 'Sign up successful' };
   }
 
   @Post('sign_in')

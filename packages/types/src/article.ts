@@ -6,6 +6,7 @@ export interface Article {
   title: string;
   content: string | null;
   published: boolean;
+  userId: number;
   createdAt?: Date | string;
   updatedAt?: Date | string;
 }

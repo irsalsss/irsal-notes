@@ -1,6 +1,6 @@
-# Turborepo starter
+# irsal-notes
 
-This Turborepo starter is maintained by the Turborepo core team.
+A monorepo application with a Next.js web app and NestJS API server.
 
 ## How to Run
 
@@ -8,7 +8,7 @@ This Turborepo starter is maintained by the Turborepo core team.
 
 - **Node.js** (v18+)
 - **pnpm** (Package manager)
-- **PostgreSQL** (Database)
+- **Supabase Account** (for PostgreSQL database)
 
 ### Steps
 
@@ -20,7 +20,7 @@ This Turborepo starter is maintained by the Turborepo core team.
     pnpm install
     ```
 
-2.  **Set up the Database (PostgreSQL)**
+2.  **Set up Supabase Database**
 
     Make sure you have a PostgreSQL database running. You will need the connection string (URL).
 
@@ -30,20 +30,34 @@ This Turborepo starter is maintained by the Turborepo core team.
 
     ```bash
     # apps/api/.env
-    DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/DB_NAME?schema=public"
+    DATABASE_URL="postgresql://postgres.[PROJECT-REF]:[YOUR-PASSWORD]@aws-0-[REGION].pooler.supabase.com:6543/postgres?pgbouncer=true&schema=public"
     ```
 
-    *Replace `USER`, `PASSWORD`, and `DB_NAME` with your actual database credentials.*
+    **Important Notes:**
+    - Replace `[PROJECT-REF]`, `[YOUR-PASSWORD]`, and `[REGION]` with your actual Supabase credentials
+    - If using the **Connection pooling** URI, make sure to include `?pgbouncer=true&schema=public` at the end
+    - If using the **Direct connection** URI, use `?schema=public` instead
+    - You can find your project reference and password in the Supabase dashboard
+    - For production, consider using environment variables or a secrets manager
 
 4.  **Run Database Migrations**
 
-    Initialize the database schema:
+    **Important:** For Prisma migrations, you may need to use the **Direct connection** URI instead of the pooled connection. Update your `.env` file temporarily with the direct connection string:
+
+    ```bash
+    # For migrations, use direct connection:
+    DATABASE_URL="postgresql://postgres:[YOUR-PASSWORD]@db.[PROJECT-REF].supabase.co:5432/postgres?schema=public"
+    ```
+
+    Then initialize the database schema:
 
     ```bash
     cd apps/api
     npx prisma migrate dev --name init
     cd ../..
     ```
+
+    After migrations are complete, you can switch back to the connection pooling URI for better performance in your application.
 
 5.  **Start the Development Server**
 
@@ -84,22 +98,24 @@ Once started, the swagger will be accessible at: http://localhost:3001/api
 
 ## What's inside?
 
-This Turborepo includes the following packages/apps:
+This monorepo includes the following packages/apps:
 
 ### Apps and Packages
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+- `apps/web`: a [Next.js](https://nextjs.org/) web application
+- `apps/api`: a [NestJS](https://nestjs.com/) API server
+- `packages/ui`: a React component library shared by the web application
+- `packages/types`: shared TypeScript types
+- `packages/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
+- `packages/typescript-config`: `tsconfig.json`s used throughout the monorepo
 
 Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
 ### Utilities
 
-This Turborepo has some additional tools already setup for you:
+This monorepo has some additional tools already setup for you:
 
+- [Turborepo](https://turborepo.com/) for monorepo task orchestration
 - [TypeScript](https://www.typescriptlang.org/) for static type checking
 - [ESLint](https://eslint.org/) for code linting
 - [Prettier](https://prettier.io) for code formatting
@@ -108,56 +124,38 @@ This Turborepo has some additional tools already setup for you:
 
 To build all apps and packages, run the following command:
 
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+```bash
+# From the root directory
+pnpm build
 ```
 
 You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
+```bash
+# Build only the web app
+pnpm build --filter=web
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
+# Build only the API
+pnpm build --filter=api
 ```
 
 ### Develop
 
 To develop all apps and packages, run the following command:
 
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
+```bash
+# From the root directory
+pnpm dev
 ```
 
 You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
+```bash
+# Develop only the web app
+pnpm dev --filter=web
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
+# Develop only the API
+pnpm dev --filter=api
 ```
 
 ### Remote Caching
@@ -169,15 +167,8 @@ Turborepo can use a technique known as [Remote Caching](https://turborepo.com/do
 
 By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
 
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
+```bash
+# From the root directory
 pnpm exec turbo login
 ```
 
@@ -185,13 +176,7 @@ This will authenticate the Turborepo CLI with your [Vercel account](https://verc
 
 Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
+```bash
 pnpm exec turbo link
 ```
 

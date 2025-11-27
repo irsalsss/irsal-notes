@@ -3,24 +3,34 @@
 import Link from 'next/link';
 import { AuthForm } from '@/components/auth-form';
 import styles from './sign-up-panel.module.scss';
-import { useAuthControllerSignUp } from '@/features/api/auth/auth';
+import {
+  getAuthControllerGetProfileQueryKey,
+  useAuthControllerSignUp,
+} from '@/features/api/auth/auth';
 import { SignUpDto } from '@/features/api/model';
 import { showNotification } from '@repo/ui';
 import { useRouter } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 
 const SignUpPanel = () => {
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const { mutate: signUp } = useAuthControllerSignUp();
   const handleSignUp = (data: SignUpDto) => {
     signUp(
       { data },
       {
-        onSuccess: () => {
+        onSuccess: async () => {
+          await queryClient.invalidateQueries({
+            queryKey: getAuthControllerGetProfileQueryKey(),
+          });
+
           showNotification({
             message: 'Sign up successful',
             variant: 'success',
           });
+
           router.push('/');
         },
         onError: () => {

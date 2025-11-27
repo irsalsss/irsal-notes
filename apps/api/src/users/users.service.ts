@@ -1,6 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { Prisma } from '@prisma/client';
 
 const SALT_ROUNDS = 10;
 
@@ -54,8 +59,32 @@ export class UsersService {
         },
       });
     } catch (error) {
-      console.error('Error creating user:', error);
-      return null;
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        if (error.code === 'P2002') {
+          throw new ConflictException('Email already exists');
+        }
+
+        if (error.code === 'P2021') {
+          throw new InternalServerErrorException(
+            'Database table does not exist. Please run database migrations.',
+          );
+        }
+
+        if (error.code === 'P5010' || error.code === 'P1001') {
+          throw new InternalServerErrorException(
+            'Database connection error. Please try again later.',
+          );
+        }
+
+        if (error.code === 'P1000') {
+          throw new InternalServerErrorException(
+            'Database authentication failed. Please check your database credentials.',
+          );
+        }
+      }
+
+      // Re-throw unknown errors
+      throw error;
     }
   }
 

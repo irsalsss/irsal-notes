@@ -5,8 +5,11 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
+  "prisma": {
+    "schema": "prisma/schema.prisma"
+  },
   "scripts": {
-    "build": "nest build && node dist/generate-swagger",
+    "build": "nest build && node dist/src/generate-swagger",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "dev": "pnpm start:dev",
     "start": "nest start",

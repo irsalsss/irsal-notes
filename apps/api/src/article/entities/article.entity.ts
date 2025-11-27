@@ -14,6 +14,9 @@ export class Article implements ArticleType {
   @ApiProperty()
   published: boolean;
 
+  @ApiProperty()
+  userId: number;
+
   @ApiProperty({ required: false })
   createdAt?: Date;
 

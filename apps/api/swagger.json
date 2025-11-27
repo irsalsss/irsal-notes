@@ -479,6 +479,9 @@
           "published": {
             "type": "boolean"
           },
+          "userId": {
+            "type": "number"
+          },
           "createdAt": {
             "format": "date-time",
             "type": "string"
@@ -491,7 +494,8 @@
         "required": [
           "id",
           "title",
-          "published"
+          "published",
+          "userId"
         ]
       },
       "UpdateArticleDto": {
