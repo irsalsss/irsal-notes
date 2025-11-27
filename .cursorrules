@@ -21,11 +21,19 @@
   .container {
     display: flex;
     
-    .item {
+    .contianer-item {
       padding: 1rem;
       
       &:hover {
         background: blue;
+      }
+
+      .item {
+        ...
+
+        .wrapper-text {
+          ...
+        }
       }
     }
   }
@@ -43,4 +51,34 @@
   }
   ```
 - Prefer nested selectors for better organization and readability
+
+## 4. React Component Declarations
+- Always use arrow function syntax for React components
+- ✅ Correct: `const ComponentName = () => { ... }`
+- ❌ Incorrect: `export function ComponentName() { ... }`
+- ✅ Correct: `const HeaderWithAuth = () => { ... }`
+- ❌ Incorrect: `export function HeaderWithAuth() { ... }`
+- This applies to all React components (functional components)
+
+### Default Exports
+- When using `export default`, define the component as a const arrow function first, then export it separately below
+- ✅ Correct:
+  ```tsx
+  const Home = async () => {
+    // component code
+  };
+  
+  export default Home;
+  ```
+- ✅ Correct:
+  ```tsx
+  const RootLayout = ({ children }: Props) => {
+    // component code
+  };
+  
+  export default RootLayout;
+  ```
+- ❌ Incorrect: `export default function Home() { ... }`
+- ❌ Incorrect: `export default async function Home() { ... }`
+- This pattern applies to Next.js pages, layouts, and any components that need default exports
 

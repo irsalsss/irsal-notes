@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { UsersModule } from 'src/users/users.module';
 import { AuthService } from './auth.service';
-import { AuthController } from './auth.controller';
+import { AuthController, EXPIRATION_TIME } from './auth.controller';
 import { jwtConstants } from './constants';
 import { JwtModule } from '@nestjs/jwt';
 
@@ -13,7 +13,7 @@ import { JwtModule } from '@nestjs/jwt';
       // So you don't need to import it in every module that uses JWT.
       global: true,
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: EXPIRATION_TIME },
     }),
   ],
   providers: [AuthService],

@@ -1,4 +1,4 @@
-import { HydrateClient } from '@/lib/hydrate-client';
+import HydrateClient from '@/lib/hydrate-client';
 import { prefetchQuery, getDehydratedState } from '@/lib/prefetch-query';
 import { ExampleHydratedQuery } from '@/components/example-hydrated-query';
 
@@ -6,7 +6,7 @@ import { ExampleHydratedQuery } from '@/components/example-hydrated-query';
  * Example server component showing how to prefetch queries
  * The prefetched data will be hydrated on the client
  */
-export default async function ExamplePage() {
+const ExamplePage = async () => {
   // Prefetch a query on the server
   const queryClient = await prefetchQuery(['example'], async () => {
     // Simulate API call
@@ -27,4 +27,6 @@ export default async function ExamplePage() {
       </HydrateClient>
     </div>
   );
-}
+};
+
+export default ExamplePage;

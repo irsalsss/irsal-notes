@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import Providers from '@/components/providers';
-import { AuthGuard } from '@/components/auth-guard';
+import { AuthGuard } from '@/components/auth-guard/auth-guard';
 import './globals.scss';
 
 const geistSans = Geist({
@@ -19,11 +19,11 @@ export const metadata: Metadata = {
   description: 'A personal blog',
 };
 
-export default function RootLayout({
+const RootLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>) => {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body
@@ -38,4 +38,6 @@ export default function RootLayout({
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;

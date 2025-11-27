@@ -1,14 +1,15 @@
-import { Header } from '@/components/header';
+import HeaderWithAuth from '@/components/header-with-auth';
 import { ArticleList } from '@/components/article-list';
-import { PersonalInfo } from '@/components/personal-info';
-import { HydrateClient } from '@/lib/hydrate-client';
+import PersonalInfo from '@/components/personal-info';
+import HydrateClient from '@/lib/hydrate-client';
 import { prefetchQuery, getDehydratedState } from '@/lib/prefetch-query';
 import {
   articleControllerFindAll,
   getArticleControllerFindAllQueryKey,
 } from '@/features/api/articles/articles';
+import styles from './page.module.scss';
 
-export default async function Home() {
+const Home = async () => {
   const queryClient = await prefetchQuery(
     getArticleControllerFindAllQueryKey(),
     () => articleControllerFindAll()
@@ -27,14 +28,8 @@ export default async function Home() {
 
   return (
     <HydrateClient state={dehydratedState}>
-      <div
-        style={{
-          maxWidth: '680px',
-          margin: '0 auto',
-          padding: '0 1.5rem 4rem',
-        }}
-      >
-        <Header />
+      <HeaderWithAuth />
+      <div className={styles['container']}>
         <main>
           <PersonalInfo {...personalInfo} />
           <ArticleList />
@@ -42,4 +37,6 @@ export default async function Home() {
       </div>
     </HydrateClient>
   );
-}
+};
+
+export default Home;

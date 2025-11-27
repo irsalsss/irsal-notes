@@ -4,7 +4,7 @@ import { toast, ToastContainer, ToastContainerProps } from 'react-toastify';
 import { Cross2Icon } from '@radix-ui/react-icons';
 import cx from 'clsx';
 import { NotificationVariant } from './types';
-import { SharedButton } from '../shared-button';
+import SharedButton from '../shared-button';
 import styles from './notification-bar.module.scss';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -60,7 +60,7 @@ export const showNotification = ({
   );
 };
 
-export const NotificationBar = ({ ...props }: ToastContainerProps) => {
+const NotificationBar = ({ ...props }: ToastContainerProps) => {
   return (
     <ToastContainer
       position="top-right"
@@ -76,6 +76,8 @@ export const NotificationBar = ({ ...props }: ToastContainerProps) => {
     />
   );
 };
+
+export default NotificationBar;
 
 // Helper functions for showing notifications
 export const showSuccess = (message: string, duration?: number) =>

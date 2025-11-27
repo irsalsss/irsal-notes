@@ -8,12 +8,12 @@ interface PersonalInfoProps {
   professionalJourney: string;
 }
 
-export function PersonalInfo({
+const PersonalInfo = ({
   fullName,
   jobTitle,
   profilePicture,
   professionalJourney,
-}: PersonalInfoProps) {
+}: PersonalInfoProps) => {
   return (
     <section className={styles.section}>
       <div className={styles.profilePictureContainer}>
@@ -32,4 +32,6 @@ export function PersonalInfo({
       <p className={styles.professionalJourney}>{professionalJourney}</p>
     </section>
   );
-}
+};
+
+export default PersonalInfo;

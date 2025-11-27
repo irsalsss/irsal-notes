@@ -18,7 +18,7 @@ export interface AuthFormProps {
   submitLabel: string;
 }
 
-export const AuthForm = ({ onSubmitAuth, submitLabel }: AuthFormProps) => {
+const AuthForm = ({ onSubmitAuth, submitLabel }: AuthFormProps) => {
   const {
     register,
     handleSubmit,
@@ -75,3 +75,5 @@ export const AuthForm = ({ onSubmitAuth, submitLabel }: AuthFormProps) => {
     </form>
   );
 };
+
+export default AuthForm;

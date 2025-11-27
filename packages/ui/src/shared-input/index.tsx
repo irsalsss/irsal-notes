@@ -5,7 +5,7 @@ import cx from 'clsx';
 import { SharedInputProps } from './types';
 import styles from './shared-input.module.scss';
 
-export const SharedInput = forwardRef<HTMLInputElement, SharedInputProps>(
+const SharedInput = forwardRef<HTMLInputElement, SharedInputProps>(
   ({ label, error, register, id, className, autoComplete, ...props }, ref) => {
     return (
       <div className={styles['container']}>
@@ -27,3 +27,5 @@ export const SharedInput = forwardRef<HTMLInputElement, SharedInputProps>(
 );
 
 SharedInput.displayName = 'SharedInput';
+
+export default SharedInput;

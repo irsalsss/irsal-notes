@@ -5,7 +5,7 @@ import cx from 'clsx';
 import { SharedButtonProps } from './types';
 import styles from './shared-button.module.scss';
 
-export const SharedButton = forwardRef<HTMLButtonElement, SharedButtonProps>(
+const SharedButton = forwardRef<HTMLButtonElement, SharedButtonProps>(
   ({ variant = 'primary', className, children, ...props }, ref) => {
     return (
       <button
@@ -20,3 +20,5 @@ export const SharedButton = forwardRef<HTMLButtonElement, SharedButtonProps>(
 );
 
 SharedButton.displayName = 'SharedButton';
+
+export default SharedButton;

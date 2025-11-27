@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { AuthForm } from '@/components/auth-form';
+import AuthForm from '@/components/auth-form';
 import styles from './sign-up-panel.module.scss';
 import {
   getAuthControllerGetProfileQueryKey,

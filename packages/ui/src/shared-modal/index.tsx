@@ -4,9 +4,9 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { Cross2Icon } from '@radix-ui/react-icons';
 import { SharedModalProps } from './types';
 import styles from './shared-modal.module.scss';
-import { SharedButton } from '../shared-button';
+import SharedButton from '../shared-button';
 
-export const SharedModal = ({
+const SharedModal = ({
   open,
   onOpenChange,
   title,
@@ -63,3 +63,5 @@ export const SharedModal = ({
     </Dialog.Root>
   );
 };
+
+export default SharedModal;
