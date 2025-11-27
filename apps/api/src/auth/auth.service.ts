@@ -27,7 +27,12 @@ export class AuthService {
       throw new UnauthorizedException('No user found');
     }
 
-    if (user?.password !== currentPassword) {
+    const isPasswordValid = await this.usersService.verifyPassword(
+      currentPassword,
+      user.password,
+    );
+
+    if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid password');
     }
 

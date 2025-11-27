@@ -24,6 +24,10 @@ export function AuthGuard({ children }: AuthGuardProps) {
     if (!isLoading && !isAuthenticated && !isAuthPage) {
       router.push('/auth/sign-in');
     }
+
+    if (!isLoading && isAuthenticated && isAuthPage) {
+      router.push('/');
+    }
   }, [data, isError, isLoading, pathname, router]);
 
   if (isLoading || (isError && !pathname?.startsWith('/auth'))) {
