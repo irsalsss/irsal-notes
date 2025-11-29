@@ -4,3 +4,4 @@ export { default as NotificationBar, showNotification, showSuccess, showError, s
 export { default as SharedModal } from './shared-modal';
 export { default as Header } from './header';
 export { default as SharedPopover, Avatar, AvatarImage, AvatarFallback, PopoverItem } from './shared-popover';
+export { default as InputEditor } from './input-editor';

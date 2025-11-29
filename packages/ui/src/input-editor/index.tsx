@@ -1,0 +1,120 @@
+'use client';
+
+import { useEditor, EditorContent } from '@tiptap/react';
+import Document from '@tiptap/extension-document';
+import Paragraph from '@tiptap/extension-paragraph';
+import Text from '@tiptap/extension-text';
+import Heading from '@tiptap/extension-heading';
+import Blockquote from '@tiptap/extension-blockquote';
+import BulletList from '@tiptap/extension-bullet-list';
+import OrderedList from '@tiptap/extension-ordered-list';
+import ListItem from '@tiptap/extension-list-item';
+import CodeBlock from '@tiptap/extension-code-block';
+import HardBreak from '@tiptap/extension-hard-break';
+import HorizontalRule from '@tiptap/extension-horizontal-rule';
+import Image from '@tiptap/extension-image';
+import Mention from '@tiptap/extension-mention';
+import Bold from '@tiptap/extension-bold';
+import Italic from '@tiptap/extension-italic';
+import Underline from '@tiptap/extension-underline';
+import Strike from '@tiptap/extension-strike';
+import Link from '@tiptap/extension-link';
+import { TableKit } from '@tiptap/extension-table';
+import TableRow from '@tiptap/extension-table-row';
+import TableCell from '@tiptap/extension-table-cell';
+import TableHeader from '@tiptap/extension-table-header';
+import TaskList from '@tiptap/extension-task-list';
+import TaskItem from '@tiptap/extension-task-item';
+import Emoji from '@tiptap/extension-emoji';
+import {
+  Details,
+  DetailsContent,
+  DetailsSummary,
+} from '@tiptap/extension-details';
+import Mathematics from '@tiptap/extension-mathematics';
+import Youtube from '@tiptap/extension-youtube';
+import NodeControlGroup from './node-control-group';
+import styles from './input-editor.module.scss';
+import { useState } from 'react';
+
+const InputEditor = () => {
+  const [inputValue, setInputValue] = useState<string>('');
+
+  const editor = useEditor({
+    editorProps: {
+      attributes: {
+        class: styles['editor'] || '',
+      },
+    },
+    extensions: [
+      Document,
+      Paragraph,
+      Text,
+      Heading.configure({
+        HTMLAttributes: {
+          class: styles['custom-heading'] || '',
+        },
+        levels: [1, 2, 3, 4, 5, 6],
+      }),
+      Bold,
+      Italic,
+      Underline,
+      Strike,
+      Link.configure({
+        openOnClick: false,
+        HTMLAttributes: {
+          class: 'link',
+        },
+      }),
+      Blockquote,
+      BulletList,
+      OrderedList,
+      ListItem,
+      CodeBlock,
+      HardBreak,
+      HorizontalRule,
+      Image,
+      Mention.configure({
+        HTMLAttributes: {
+          class: 'mention',
+        },
+      }),
+      TableKit,
+      TableRow,
+      TableHeader,
+      TableCell,
+      TaskList,
+      TaskItem.configure({
+        nested: true,
+      }),
+      Emoji,
+      Details,
+      DetailsSummary,
+      DetailsContent,
+      Mathematics,
+      Youtube.configure({
+        controls: true,
+        nocookie: true,
+      }),
+    ],
+    content: inputValue,
+    onUpdate: ({ editor }) => {
+      const htmlContent = editor.getHTML();
+      const jsonContent = editor.getJSON();
+      console.log('jsonContent::: ', jsonContent);
+      console.log('htmlContent:::', htmlContent);
+      setInputValue(htmlContent);
+    },
+    // Don't render immediately on the server to avoid SSR issues
+    immediatelyRender: false,
+  });
+
+  return (
+    <div className={styles['editor-wrapper']}>
+      <NodeControlGroup editor={editor} />
+      <EditorContent editor={editor} />
+    </div>
+  );
+};
+
+export default InputEditor;
