@@ -8,4 +8,5 @@ export interface HeaderProps {
   user?: HeaderUser;
   onSignOut?: () => void;
   editProfileHref?: string;
+  themeToggle?: React.ReactNode;
 }

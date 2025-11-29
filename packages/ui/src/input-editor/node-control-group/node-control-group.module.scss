@@ -11,13 +11,7 @@
   top: 0;
   z-index: 10;
   backdrop-filter: blur(8px);
-  
-  // Slight transparency for sticky effect if supported
-  background-color: rgba(255, 255, 255, 0.95);
-  
-  @media (prefers-color-scheme: dark) {
-    background-color: rgba(23, 23, 23, 0.95); // neutral-900 with opacity
-  }
+  background-color: color-mix(in srgb, var(--color-background) 95%, transparent);
 }
 
 .toolbar-group-wrapper {

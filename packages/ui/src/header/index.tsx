@@ -14,6 +14,7 @@ import buttonStyles from '../shared-button/shared-button.module.scss';
 import cx from 'clsx';
 import { HeaderProps } from './types';
 import { getInitials } from '@repo/utils';
+import ThemeToggle from '../theme-toggle';
 
 const Header = ({
   user,
@@ -77,6 +78,10 @@ const Header = ({
           </SharedPopover>
         </div>
       </nav>
+
+      <div className={styles['theme-toggle-container']}>
+        <ThemeToggle />
+      </div>
     </header>
   );
 };

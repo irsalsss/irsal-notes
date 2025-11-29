@@ -2,6 +2,7 @@
   padding: var(--spacing-4) 0;
   border-bottom: 1px solid var(--color-border);
   margin-bottom: var(--spacing-6);
+  position: relative;
 
   .nav {
     max-width: 680px;
@@ -42,6 +43,13 @@
         }
       }
     }
+  }
+
+  .theme-toggle-container {
+    position: absolute;
+    top: var(--spacing-4);
+    right: var(--spacing-4);
+    z-index: 100;
   }
 }
 

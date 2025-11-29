@@ -8,6 +8,7 @@ import {
 import { ReactNode, useState } from 'react';
 import { getQueryClient } from '@/lib/react-query';
 import { NotificationBar } from '@repo/ui';
+import ThemeProvider from '../theme-provider';
 
 const Providers = ({
   children,
@@ -22,14 +23,16 @@ const Providers = ({
 
   return (
     <QueryClientProvider client={queryClient}>
-      {dehydratedState ? (
-        <HydrationBoundary state={dehydratedState}>
-          {children}
-        </HydrationBoundary>
-      ) : (
-        children
-      )}
-      <NotificationBar />
+      <ThemeProvider>
+        {dehydratedState ? (
+          <HydrationBoundary state={dehydratedState}>
+            {children}
+          </HydrationBoundary>
+        ) : (
+          children
+        )}
+        <NotificationBar />
+      </ThemeProvider>
     </QueryClientProvider>
   );
 };

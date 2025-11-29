@@ -181,8 +181,60 @@
   --color-primary: var(--color-accent);
 }
 
+/* ============================================
+   DARK MODE - Data Attribute (User Preference)
+   ============================================ */
+[data-theme="dark"] {
+  /* ============================================
+     SEMANTIC COLORS - Dark Mode
+     ============================================ */
+  --color-background: var(--color-neutral-950);
+  --color-foreground: var(--color-neutral-50);
+  --color-muted: var(--color-neutral-400);
+  --color-muted-foreground: var(--color-neutral-300);
+  --color-border: var(--color-neutral-800);
+  --color-border-subtle: var(--color-neutral-900);
+  --color-accent: var(--color-neutral-50);
+  --color-accent-foreground: var(--color-neutral-950);
+  --color-secondary: var(--color-neutral-800);
+  
+  /* ============================================
+     INTERACTIVE STATES - Dark Mode
+     ============================================ */
+  --color-hover: var(--color-neutral-900);
+  --color-active: var(--color-neutral-800);
+  --color-focus-ring: var(--color-neutral-600);
+  
+  /* ============================================
+     TYPOGRAPHY COLORS - Dark Mode
+     ============================================ */
+  --color-heading: var(--color-neutral-50);
+  --color-body: var(--color-neutral-100);
+  --color-body-muted: var(--color-neutral-400);
+  --color-caption: var(--color-neutral-400);
+  --color-link: var(--color-neutral-100);
+  --color-link-hover: var(--color-neutral-300);
+  
+  /* ============================================
+     OVERLAY COLORS - Dark Mode
+     ============================================ */
+  --color-overlay: rgba(0, 0, 0, 0.7);
+  --color-overlay-dark: rgba(0, 0, 0, 0.85);
+  
+  /* ============================================
+     SHADOW COLORS - Dark Mode
+     ============================================ */
+  --color-shadow-light: rgba(0, 0, 0, 0.3);
+  --color-shadow-base: rgba(0, 0, 0, 0.4);
+  --color-shadow-medium: rgba(0, 0, 0, 0.4);
+  --color-shadow-dark: rgba(0, 0, 0, 0.4);
+}
+
+/* ============================================
+   DARK MODE - System Preference (Fallback)
+   ============================================ */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme]) {
     /* ============================================
        SEMANTIC COLORS - Dark Mode
        ============================================ */
@@ -287,8 +339,13 @@ a:focus-visible {
   color: var(--color-neutral-900);
 }
 
+[data-theme="dark"] ::selection {
+  background-color: var(--color-neutral-700);
+  color: var(--color-neutral-50);
+}
+
 @media (prefers-color-scheme: dark) {
-  ::selection {
+  :root:not([data-theme]) ::selection {
     background-color: var(--color-neutral-700);
     color: var(--color-neutral-50);
   }

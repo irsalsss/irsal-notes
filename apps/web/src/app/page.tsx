@@ -1,5 +1,4 @@
 import HeaderWithAuth from '@/components/header-with-auth';
-import { ArticleList } from '@/components/article-list';
 import PersonalInfo from '@/components/personal-info';
 import HydrateClient from '@/lib/hydrate-client';
 import { prefetchQuery, getDehydratedState } from '@/lib/prefetch-query';
@@ -32,7 +31,6 @@ const Home = async () => {
       <div className={styles['container']}>
         <main>
           <PersonalInfo {...personalInfo} />
-          <ArticleList />
         </main>
       </div>
     </HydrateClient>
