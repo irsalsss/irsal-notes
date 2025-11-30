@@ -10,6 +10,11 @@ export interface User {
   id: number;
   email: string;
   password: string;
-  createdAt: string;
+  name?: string;
+  jobTitle?: string;
+  location?: string;
+  company?: string;
+  aboutMe?: string;
+  createdAt?: string;
   updatedAt: string;
 }

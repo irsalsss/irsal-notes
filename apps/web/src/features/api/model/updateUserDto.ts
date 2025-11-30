@@ -13,4 +13,12 @@ export interface UpdateUserDto {
   password?: string;
   /** The name of the user */
   name?: string;
+  /** The job title of the user */
+  jobTitle?: string;
+  /** The location of the user */
+  location?: string;
+  /** The company of the user */
+  company?: string;
+  /** The about me of the user */
+  aboutMe?: string;
 }

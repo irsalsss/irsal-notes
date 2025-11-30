@@ -192,7 +192,7 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
       return useMutation(mutationOptions);
     }
     export type authControllerGetProfileResponse200 = {
-  data: void
+  data: User
   status: 200
 }
     
@@ -295,3 +295,80 @@ export function useAuthControllerGetProfile<TData = Awaited<ReturnType<typeof au
 
 
 
+export type authControllerSignOutResponse200 = {
+  data: void
+  status: 200
+}
+    
+export type authControllerSignOutResponseSuccess = (authControllerSignOutResponse200) & {
+  headers: Headers;
+};
+;
+
+export type authControllerSignOutResponse = (authControllerSignOutResponseSuccess)
+
+export const getAuthControllerSignOutUrl = () => {
+
+
+  
+
+  return `/auth/sign_out`
+}
+
+export const authControllerSignOut = async ( options?: RequestInit): Promise<authControllerSignOutResponse> => {
+  
+  return customInstance<authControllerSignOutResponse>(getAuthControllerSignOutUrl(),
+  {      
+    ...options,
+    method: 'POST'
+    
+    
+  }
+);}
+
+
+
+
+export const getAuthControllerSignOutMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof authControllerSignOut>>, TError,void, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof authControllerSignOut>>, TError,void, TContext> => {
+
+const mutationKey = ['authControllerSignOut'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof authControllerSignOut>>, void> = () => {
+          
+
+          return  authControllerSignOut(requestOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type AuthControllerSignOutMutationResult = NonNullable<Awaited<ReturnType<typeof authControllerSignOut>>>
+    
+    export type AuthControllerSignOutMutationError = unknown
+
+    export const useAuthControllerSignOut = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof authControllerSignOut>>, TError,void, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof authControllerSignOut>>,
+        TError,
+        void,
+        TContext
+      > => {
+
+      const mutationOptions = getAuthControllerSignOutMutationOptions(options);
+
+      return useMutation(mutationOptions);
+    }
+    

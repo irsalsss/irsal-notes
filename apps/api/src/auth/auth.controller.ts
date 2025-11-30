@@ -19,13 +19,17 @@ import {
 } from '@nestjs/swagger';
 import { User } from 'src/users/entities/user.entity';
 import { AuthGuard, RequestWithUser } from './auth.guard';
+import { UsersService } from 'src/users/users.service';
 
 export const EXPIRATION_TIME = 60 * 60 * 1000; // 60 minutes
 
 @Controller('auth')
 @ApiTags('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly usersService: UsersService,
+  ) {}
 
   @Post('sign_up')
   @ApiCreatedResponse({ type: User })
@@ -74,8 +78,10 @@ export class AuthController {
 
   @UseGuards(AuthGuard)
   @Get('profile')
-  getProfile(@Request() req: RequestWithUser): RequestWithUser['user'] {
-    return req.user;
+  @ApiOkResponse({ type: User })
+  async getProfile(@Request() req: RequestWithUser) {
+    const userId = parseInt(req.user.sub, 10);
+    return this.usersService.findProfile(userId);
   }
 
   @Post('sign_out')

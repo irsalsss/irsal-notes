@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import type { Article as ArticleType } from '@repo/types';
 
-export class Article implements ArticleType {
+export class Article {
   @ApiProperty()
   id: number;
 

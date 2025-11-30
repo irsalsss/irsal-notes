@@ -1,10 +1,16 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useThemeStore } from '@repo/utils';
+import { ThemeState, useThemeStore } from '@repo/utils';
+import { useShallow } from 'zustand/react/shallow';
 
 const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-  const { theme, getEffectiveTheme } = useThemeStore();
+  const { theme, getEffectiveTheme } = useThemeStore(
+    useShallow((state: ThemeState) => ({
+      theme: state.theme,
+      getEffectiveTheme: state.getEffectiveTheme,
+    }))
+  );
 
   useEffect(() => {
     // Initialize theme on mount

@@ -334,7 +334,7 @@ export type usersControllerUpdateResponseSuccess = (usersControllerUpdateRespons
 
 export type usersControllerUpdateResponse = (usersControllerUpdateResponseSuccess)
 
-export const getUsersControllerUpdateUrl = (id: string,) => {
+export const getUsersControllerUpdateUrl = (id: number,) => {
 
 
   
@@ -342,7 +342,7 @@ export const getUsersControllerUpdateUrl = (id: string,) => {
   return `/users/${id}`
 }
 
-export const usersControllerUpdate = async (id: string,
+export const usersControllerUpdate = async (id: number,
     updateUserDto: UpdateUserDto, options?: RequestInit): Promise<usersControllerUpdateResponse> => {
   
   return customInstance<usersControllerUpdateResponse>(getUsersControllerUpdateUrl(id),
@@ -359,8 +359,8 @@ export const usersControllerUpdate = async (id: string,
 
 
 export const getUsersControllerUpdateMutationOptions = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof usersControllerUpdate>>, TError,{id: string;data: UpdateUserDto}, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof usersControllerUpdate>>, TError,{id: string;data: UpdateUserDto}, TContext> => {
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof usersControllerUpdate>>, TError,{id: number;data: UpdateUserDto}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof usersControllerUpdate>>, TError,{id: number;data: UpdateUserDto}, TContext> => {
 
 const mutationKey = ['usersControllerUpdate'];
 const {mutation: mutationOptions, request: requestOptions} = options ?
@@ -372,7 +372,7 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
       
 
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof usersControllerUpdate>>, {id: string;data: UpdateUserDto}> = (props) => {
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof usersControllerUpdate>>, {id: number;data: UpdateUserDto}> = (props) => {
           const {id,data} = props ?? {};
 
           return  usersControllerUpdate(id,data,requestOptions)
@@ -388,11 +388,11 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
     export type UsersControllerUpdateMutationError = unknown
 
     export const useUsersControllerUpdate = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof usersControllerUpdate>>, TError,{id: string;data: UpdateUserDto}, TContext>, request?: SecondParameter<typeof customInstance>}
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof usersControllerUpdate>>, TError,{id: number;data: UpdateUserDto}, TContext>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof usersControllerUpdate>>,
         TError,
-        {id: string;data: UpdateUserDto},
+        {id: number;data: UpdateUserDto},
         TContext
       > => {
 

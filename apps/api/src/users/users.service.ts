@@ -6,6 +6,7 @@ import {
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Prisma } from '@prisma/client';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 const SALT_ROUNDS = 10;
 
@@ -32,6 +33,23 @@ export class UsersService {
         id: true,
         email: true,
         name: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+  }
+
+  findProfile(id: number) {
+    return this.prisma.user.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        jobTitle: true,
+        location: true,
+        company: true,
+        aboutMe: true,
         createdAt: true,
         updatedAt: true,
       },
@@ -114,30 +132,18 @@ export class UsersService {
     }
   }
 
-  async update(
-    id: number,
-    data: {
-      email?: string;
-      password?: string;
-      name?: string;
-    },
-  ) {
-    const updateData: { email?: string; password?: string; name?: string } = {
-      ...data,
-    };
-
-    // If password is being updated, hash it first
-    if (data.password) {
-      updateData.password = await bcrypt.hash(data.password, SALT_ROUNDS);
-    }
-
+  async update(id: number, data: UpdateUserDto) {
     return this.prisma.user.update({
       where: { id },
-      data: updateData,
+      data,
       select: {
         id: true,
         email: true,
         name: true,
+        jobTitle: true,
+        location: true,
+        company: true,
+        aboutMe: true,
         createdAt: true,
         updatedAt: true,
       },

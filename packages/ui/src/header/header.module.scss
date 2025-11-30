@@ -2,7 +2,10 @@
   padding: var(--spacing-4) 0;
   border-bottom: 1px solid var(--color-border);
   margin-bottom: var(--spacing-6);
-  position: relative;
+  position: sticky;
+  top: 0;
+  background-color: var(--color-background);
+  z-index: 50;
 
   .nav {
     max-width: 680px;

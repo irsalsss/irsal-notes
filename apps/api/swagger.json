@@ -256,7 +256,14 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -368,7 +375,7 @@
             "required": true,
             "in": "path",
             "schema": {
-              "type": "string"
+              "type": "number"
             }
           }
         ],
@@ -554,6 +561,21 @@
           "password": {
             "type": "string"
           },
+          "name": {
+            "type": "string"
+          },
+          "jobTitle": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "company": {
+            "type": "string"
+          },
+          "aboutMe": {
+            "type": "string"
+          },
           "createdAt": {
             "format": "date-time",
             "type": "string"
@@ -567,7 +589,6 @@
           "id",
           "email",
           "password",
-          "createdAt",
           "updatedAt"
         ]
       },
@@ -607,6 +628,26 @@
             "type": "string",
             "description": "The name of the user",
             "example": "John Doe"
+          },
+          "jobTitle": {
+            "type": "string",
+            "description": "The job title of the user",
+            "example": "Software Engineer"
+          },
+          "location": {
+            "type": "string",
+            "description": "The location of the user",
+            "example": "New York, NY"
+          },
+          "company": {
+            "type": "string",
+            "description": "The company of the user",
+            "example": "Google"
+          },
+          "aboutMe": {
+            "type": "string",
+            "description": "The about me of the user",
+            "example": "I am a software engineer"
           }
         }
       }

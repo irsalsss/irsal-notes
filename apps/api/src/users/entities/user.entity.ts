@@ -1,7 +1,6 @@
-import type { User as UserType } from '@repo/types';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class User implements UserType {
+export class User {
   @ApiProperty()
   id: number;
 
@@ -11,7 +10,22 @@ export class User implements UserType {
   @ApiProperty()
   password: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
+  name?: string;
+
+  @ApiProperty({ required: false })
+  jobTitle?: string;
+
+  @ApiProperty({ required: false })
+  location?: string;
+
+  @ApiProperty({ required: false })
+  company?: string;
+
+  @ApiProperty({ required: false })
+  aboutMe?: string;
+
+  @ApiProperty({ required: false })
   createdAt: Date;
 
   @ApiProperty()

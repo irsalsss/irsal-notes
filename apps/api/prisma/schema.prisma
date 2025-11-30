@@ -16,6 +16,10 @@ model User {
   email     String    @unique
   name      String?
   password  String
+  jobTitle  String?
+  location  String?
+  company   String?
+  aboutMe   String?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   articles  Article[]

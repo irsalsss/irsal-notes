@@ -9,7 +9,8 @@ import {
   PASSWORD_REQUIRED_MESSAGE,
   PASSWORD_MIN_LENGTH_MESSAGE,
 } from './constants';
-import { SignInDto, SignUpDto } from '@/features/api/model';
+import { SignInDto } from '@/features/api/model';
+import { SignUpDto } from '@/features/api/model';
 
 type AuthFormData = SignInDto | SignUpDto;
 

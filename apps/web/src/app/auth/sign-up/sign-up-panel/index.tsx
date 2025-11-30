@@ -7,10 +7,10 @@ import {
   getAuthControllerGetProfileQueryKey,
   useAuthControllerSignUp,
 } from '@/features/api/auth/auth';
-import { SignUpDto } from '@/features/api/model';
 import { showNotification } from '@repo/ui';
 import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
+import { SignUpDto } from '@/features/api/model';
 
 const SignUpPanel = () => {
   const router = useRouter();

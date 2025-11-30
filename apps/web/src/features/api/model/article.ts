@@ -13,6 +13,7 @@ export interface Article {
   /** @nullable */
   content?: ArticleContent;
   published: boolean;
+  userId: number;
   createdAt?: string;
   updatedAt?: string;
 }

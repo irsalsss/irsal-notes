@@ -1,8 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
-import type { CreateArticleDto as CreateArticleDtoType } from '@repo/types';
 
-export class CreateArticleDto implements CreateArticleDtoType {
+export class CreateArticleDto {
   @ApiProperty({
     description: 'The title of the article',
     example: 'My First Article',

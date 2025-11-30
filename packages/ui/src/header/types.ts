@@ -1,11 +1,7 @@
-export interface HeaderUser {
-  id: number;
-  email: string;
-  name?: string;
-}
+import { User } from '@/features/api/model';
 
 export interface HeaderProps {
-  user?: HeaderUser;
+  user?: User;
   onSignOut?: () => void;
   editProfileHref?: string;
   themeToggle?: React.ReactNode;

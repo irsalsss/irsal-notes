@@ -77,7 +77,21 @@ export const customInstance = <T>(
   const config = convertRequestInitToAxiosConfig(url, options);
   const source = axios.CancelToken.source();
   const promise = AXIOS_INSTANCE({ ...config, cancelToken: source.token }).then(
-    ({ data }) => data,
+    (response) => {
+      // Convert AxiosResponseHeaders to standard Headers object
+      const headers = new Headers();
+      Object.entries(response.headers).forEach(([key, value]) => {
+        if (value !== undefined) {
+          headers.set(key, Array.isArray(value) ? value.join(', ') : String(value));
+        }
+      });
+
+      return {
+        data: response.data,
+        status: response.status,
+        headers,
+      } as T;
+    },
   ) as CancellablePromise<T>;
 
   promise.cancel = () => {
