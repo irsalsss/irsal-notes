@@ -42,4 +42,12 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   @IsString()
   @IsOptional()
   aboutMe?: string;
+
+  @ApiPropertyOptional({
+    description: 'The profile picture URL of the user',
+    example: 'https://example.com/profile.jpg',
+  })
+  @IsString()
+  @IsOptional()
+  profilePicture?: string;
 }

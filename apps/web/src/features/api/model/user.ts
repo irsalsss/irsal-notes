@@ -15,6 +15,7 @@ export interface User {
   location?: string;
   company?: string;
   aboutMe?: string;
+  profilePicture?: string;
   createdAt?: string;
   updatedAt: string;
 }

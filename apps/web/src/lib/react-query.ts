@@ -1,22 +1,12 @@
-import { QueryClient, DefaultOptions } from '@tanstack/react-query';
-
-const queryConfig: DefaultOptions = {
-  queries: {
-    refetchOnWindowFocus: false,
-    retry: false,
-    staleTime: 60 * 1000, // 1 minute
-  },
-};
-
-export function makeQueryClient() {
-  return new QueryClient({
-    defaultOptions: queryConfig,
-  });
-}
+'use client';
+import { QueryClient } from '@tanstack/react-query';
+import { makeQueryClient } from './query-config';
 
 let browserQueryClient: QueryClient | undefined = undefined;
 
-export function getQueryClient() {
+// For Client Components: singleton pattern to avoid recreating
+// the QueryClient during React suspense/re-renders
+export const getQueryClient = () => {
   if (typeof window === 'undefined') {
     // Server: always make a new query client
     return makeQueryClient();
@@ -27,5 +17,5 @@ export function getQueryClient() {
     if (!browserQueryClient) browserQueryClient = makeQueryClient();
     return browserQueryClient;
   }
-}
+};
 

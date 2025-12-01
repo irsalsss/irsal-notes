@@ -21,4 +21,6 @@ export interface UpdateUserDto {
   company?: string;
   /** The about me of the user */
   aboutMe?: string;
+  /** The profile picture URL of the user */
+  profilePicture?: string;
 }

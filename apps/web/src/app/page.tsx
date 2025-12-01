@@ -1,36 +1,51 @@
 import HeaderWithAuth from '@/components/header-with-auth';
-import PersonalInfo from '@/components/personal-info';
+import PersonalInfo from '@/components/personal-info/personal-info';
 import HydrateClient from '@/lib/hydrate-client';
-import { prefetchQuery, getDehydratedState } from '@/lib/prefetch-query';
+import { getDehydratedState } from '@/lib/prefetch-query';
 import {
   articleControllerFindAll,
   getArticleControllerFindAllQueryKey,
 } from '@/features/api/articles/articles';
+import {
+  authControllerGetProfile,
+  getAuthControllerGetProfileQueryKey,
+} from '@/features/api/auth/auth';
 import styles from './page.module.scss';
+import { getQueryClient } from '@/lib/get-query-client';
+import { getCookieHeader } from '@/lib/cookies';
 
 const Home = async () => {
-  const queryClient = await prefetchQuery(
-    getArticleControllerFindAllQueryKey(),
-    () => articleControllerFindAll()
-  );
+  const queryClient = getQueryClient();
+  const cookieHeader = await getCookieHeader();
+
+  await queryClient.prefetchQuery({
+    queryKey: getArticleControllerFindAllQueryKey(),
+    queryFn: () => articleControllerFindAll(),
+    staleTime: 60 * 1000,
+  });
+
+  const userProfile = await queryClient.fetchQuery({
+    queryKey: getAuthControllerGetProfileQueryKey(),
+    queryFn: () =>
+      authControllerGetProfile({
+        headers: { Cookie: cookieHeader },
+      }),
+    staleTime: 60 * 1000,
+  });
 
   const dehydratedState = getDehydratedState(queryClient);
-
-  // TODO: Replace these with your actual information
-  const personalInfo = {
-    fullName: 'Your Full Name',
-    jobTitle: 'Your Current Job Title',
-    profilePicture: '/profile.jpg', // Place your profile picture in the public folder
-    professionalJourney:
-      'A brief description of your professional journey, experiences, and what you do. This is where you can share your story, passions, and what drives you in your career.',
-  };
 
   return (
     <HydrateClient state={dehydratedState}>
       <HeaderWithAuth />
       <div className={styles['container']}>
         <main>
-          <PersonalInfo {...personalInfo} />
+          <PersonalInfo
+            name={userProfile.data.name}
+            jobTitle={userProfile.data.jobTitle}
+            profilePicture={userProfile.data.profilePicture}
+            professionalJourney={userProfile.data.aboutMe}
+          />
         </main>
       </div>
     </HydrateClient>

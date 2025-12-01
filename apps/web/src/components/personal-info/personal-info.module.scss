@@ -6,7 +6,7 @@
   margin-bottom: 4rem;
   padding-top: 2rem;
 
-  .profilePictureContainer {
+  .profile-picture-container {
     position: relative;
     width: 120px;
     height: 120px;
@@ -14,36 +14,36 @@
     overflow: hidden;
     border: 2px solid var(--border);
 
-    .profilePicture {
+    .profile-picture {
       object-fit: cover;
     }
   }
 
-  .textContainer {
+  .text-container {
     text-align: center;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
 
-    .fullName {
+    .full-name {
       font-size: 1.875rem;
       font-weight: 500;
       line-height: 1.2;
     }
 
-    .jobTitle {
+    .job-title {
       font-size: 1rem;
       color: var(--muted);
       font-weight: 400;
     }
+  }
 
-    .professionalJourney {
-      font-size: 0.9375rem;
-      line-height: 1.7;
-      color: var(--foreground);
-      max-width: 600px;
-      text-align: center;
-    }
+  .professional-journey {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: var(--foreground);
+    max-width: 600px;
+    text-align: center;
   }
 }
 

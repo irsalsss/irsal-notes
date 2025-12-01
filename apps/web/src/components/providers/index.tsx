@@ -5,6 +5,7 @@ import {
   HydrationBoundary,
   DehydratedState,
 } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ReactNode, useState } from 'react';
 import { getQueryClient } from '@/lib/react-query';
 import { NotificationBar } from '@repo/ui';
@@ -33,6 +34,7 @@ const Providers = ({
         )}
         <NotificationBar />
       </ThemeProvider>
+      {process.env.NODE_ENV === 'development' && <ReactQueryDevtools />}
     </QueryClientProvider>
   );
 };

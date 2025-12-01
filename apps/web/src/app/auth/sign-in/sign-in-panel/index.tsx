@@ -33,8 +33,7 @@ const SignInPanel = () => {
 
           router.push('/');
         },
-        onError: (data) => {
-          console.log('data::: ', data);
+        onError: () => {
           showNotification({
             message: 'Sign in failed',
             variant: 'error',

@@ -11,7 +11,6 @@ export * from './articleContent';
 export * from './createArticleDto';
 export * from './createUserDto';
 export * from './signInDto';
-export * from './signUpDto';
 export * from './updateArticleDto';
 export * from './updateUserDto';
 export * from './user';

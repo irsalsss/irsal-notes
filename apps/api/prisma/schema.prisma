@@ -20,6 +20,7 @@ model User {
   location  String?
   company   String?
   aboutMe   String?
+  profilePicture String?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   articles  Article[]

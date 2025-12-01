@@ -26,6 +26,9 @@ export class User {
   aboutMe?: string;
 
   @ApiProperty({ required: false })
+  profilePicture?: string;
+
+  @ApiProperty({ required: false })
   createdAt: Date;
 
   @ApiProperty()

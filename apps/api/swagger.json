@@ -576,6 +576,9 @@
           "aboutMe": {
             "type": "string"
           },
+          "profilePicture": {
+            "type": "string"
+          },
           "createdAt": {
             "format": "date-time",
             "type": "string"
@@ -648,6 +651,11 @@
             "type": "string",
             "description": "The about me of the user",
             "example": "I am a software engineer"
+          },
+          "profilePicture": {
+            "type": "string",
+            "description": "The profile picture URL of the user",
+            "example": "https://example.com/profile.jpg"
           }
         }
       }
