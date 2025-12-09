@@ -43,6 +43,7 @@ const EditProfileForm = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
     reset,
   } = useForm<ProfileFormData>({
@@ -59,6 +60,10 @@ const EditProfileForm = () => {
     if (userInfo?.id) {
       updateUser({ id: userInfo.id, data });
     }
+  };
+
+  const handleEditorChange = (content: string) => {
+    setValue('aboutMe', content);
   };
 
   useEffect(() => {
@@ -129,7 +134,10 @@ const EditProfileForm = () => {
               Professional Journey
             </label>
             <div className={styles['editor-wrapper']}>
-              <InputEditor />
+              <InputEditor
+                defaultValue={userInfo?.aboutMe}
+                onEditorChange={handleEditorChange}
+              />
             </div>
           </div>
 

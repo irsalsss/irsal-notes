@@ -35,10 +35,15 @@ import Mathematics from '@tiptap/extension-mathematics';
 import Youtube from '@tiptap/extension-youtube';
 import NodeControlGroup from './node-control-group';
 import styles from './input-editor.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-const InputEditor = () => {
-  const [inputValue, setInputValue] = useState<string>('');
+interface InputEditorProps {
+  defaultValue?: string;
+  onEditorChange: (content: string) => void;
+}
+
+const InputEditor = ({ defaultValue, onEditorChange }: InputEditorProps) => {
+  const [inputValue, setInputValue] = useState<string>(defaultValue || '');
 
   const editor = useEditor({
     editorProps: {
@@ -104,10 +109,21 @@ const InputEditor = () => {
       console.log('jsonContent::: ', jsonContent);
       console.log('htmlContent:::', htmlContent);
       setInputValue(htmlContent);
+      onEditorChange(htmlContent);
     },
     // Don't render immediately on the server to avoid SSR issues
     immediatelyRender: false,
   });
+
+  useEffect(() => {
+    if (editor && defaultValue !== undefined) {
+      const currentContent = editor.getHTML();
+      if (currentContent !== defaultValue) {
+        editor.commands.setContent(defaultValue || '');
+        setInputValue(defaultValue || '');
+      }
+    }
+  }, [defaultValue, editor]);
 
   return (
     <div className={styles['editor-wrapper']}>

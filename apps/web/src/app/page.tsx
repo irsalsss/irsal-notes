@@ -43,6 +43,7 @@ const Home = async () => {
           <PersonalInfo
             name={userProfile.data.name}
             jobTitle={userProfile.data.jobTitle}
+            email={userProfile.data.email}
             profilePicture={userProfile.data.profilePicture}
             professionalJourney={userProfile.data.aboutMe}
           />
