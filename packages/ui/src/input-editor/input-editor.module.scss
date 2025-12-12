@@ -1,3 +1,17 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+
+  .editor-wrapper {
+    order: 1;
+  }
+
+  .error-message {
+    order: 3;
+  }
+}
+
 .editor-wrapper {
   display: flex;
   flex-direction: column;
@@ -12,6 +26,21 @@
     border-color: var(--color-neutral-400);
     box-shadow: var(--shadow-sm);
   }
+
+  &.has-error {
+    border-color: var(--color-error);
+
+    &:focus-within {
+      border-color: var(--color-error);
+      box-shadow: 0 0 0 1px var(--color-error);
+    }
+  }
+}
+
+.error-message {
+  font-size: var(--font-size-sm);
+  color: var(--color-error);
+  margin-top: var(--spacing-1);
 }
 
 .editor {

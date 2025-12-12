@@ -36,13 +36,21 @@ import Youtube from '@tiptap/extension-youtube';
 import NodeControlGroup from './node-control-group';
 import styles from './input-editor.module.scss';
 import { useEffect, useState } from 'react';
+import cx from 'clsx';
 
 interface InputEditorProps {
   defaultValue?: string;
   onEditorChange: (content: string) => void;
+  error?: string;
+  containerClassName?: string;
 }
 
-const InputEditor = ({ defaultValue, onEditorChange }: InputEditorProps) => {
+const InputEditor = ({
+  defaultValue,
+  onEditorChange,
+  error,
+  containerClassName,
+}: InputEditorProps) => {
   const [inputValue, setInputValue] = useState<string>(defaultValue || '');
 
   const editor = useEditor({
@@ -105,9 +113,7 @@ const InputEditor = ({ defaultValue, onEditorChange }: InputEditorProps) => {
     content: inputValue,
     onUpdate: ({ editor }) => {
       const htmlContent = editor.getHTML();
-      const jsonContent = editor.getJSON();
-      console.log('jsonContent::: ', jsonContent);
-      console.log('htmlContent:::', htmlContent);
+      // const jsonContent = editor.getJSON();
       setInputValue(htmlContent);
       onEditorChange(htmlContent);
     },
@@ -126,9 +132,16 @@ const InputEditor = ({ defaultValue, onEditorChange }: InputEditorProps) => {
   }, [defaultValue, editor]);
 
   return (
-    <div className={styles['editor-wrapper']}>
-      <NodeControlGroup editor={editor} />
-      <EditorContent editor={editor} />
+    <div className={cx(styles['container'], containerClassName)}>
+      <div
+        className={cx(styles['editor-wrapper'], {
+          [styles['has-error'] as string]: !!error,
+        })}
+      >
+        <NodeControlGroup editor={editor} />
+        <EditorContent editor={editor} />
+      </div>
+      {error && <span className={styles['error-message']}>{error}</span>}
     </div>
   );
 };

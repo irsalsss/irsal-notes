@@ -5,4 +5,6 @@ export { default as SharedModal } from './shared-modal';
 export { default as Header } from './header';
 export { default as SharedPopover, Avatar, AvatarImage, AvatarFallback, PopoverItem } from './shared-popover';
 export { default as InputEditor } from './input-editor';
+export { default as SharedInputEditor } from './shared-input-editor';
+export { default as SharedHtmlContent } from './shared-html-content';
 export { default as ThemeToggle } from './theme-toggle';

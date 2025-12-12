@@ -1,35 +1,34 @@
 import HeaderWithAuth from '@/components/header-with-auth';
 import {
-  articleControllerFindAll,
-  getArticleControllerFindAllQueryKey,
+  articleControllerFindDrafts,
+  getArticleControllerFindDraftsQueryKey,
 } from '@/features/api/articles/articles';
 import { getDehydratedState } from '@/lib/prefetch-query';
 import { getQueryClient } from '@/lib/get-query-client';
 import HydrateClient from '@/lib/hydrate-client';
 import { setHeadersWithCookie } from '@/lib/cookies';
-import ArticlesPanel from './articles-panel';
+import ArticlesPanel from '../articles-panel';
 
-const ArticlesPage = async () => {
+const ArticlesDraftPage = async () => {
   const queryClient = getQueryClient();
-
   const requestOptions = await setHeadersWithCookie();
 
   const response = await queryClient.fetchQuery({
-    queryKey: getArticleControllerFindAllQueryKey(),
-    queryFn: () => articleControllerFindAll(requestOptions),
+    queryKey: getArticleControllerFindDraftsQueryKey(),
+    queryFn: () => articleControllerFindDrafts(requestOptions),
     staleTime: 60 * 1000,
   });
 
-  const publishedData = response.data;
+  const draftsData = response.data;
 
   const dehydratedState = getDehydratedState(queryClient);
 
   return (
     <HydrateClient state={dehydratedState}>
       <HeaderWithAuth />
-      <ArticlesPanel articles={publishedData} activeTab={'published'} />
+      <ArticlesPanel articles={draftsData} activeTab={'drafts'} />
     </HydrateClient>
   );
 };
 
-export default ArticlesPage;
+export default ArticlesDraftPage;

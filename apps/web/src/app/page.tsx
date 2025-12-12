@@ -3,10 +3,6 @@ import PersonalInfo from '@/components/personal-info/personal-info';
 import HydrateClient from '@/lib/hydrate-client';
 import { getDehydratedState } from '@/lib/prefetch-query';
 import {
-  articleControllerFindAll,
-  getArticleControllerFindAllQueryKey,
-} from '@/features/api/articles/articles';
-import {
   authControllerGetProfile,
   getAuthControllerGetProfileQueryKey,
 } from '@/features/api/auth/auth';
@@ -17,12 +13,6 @@ import { getCookieHeader } from '@/lib/cookies';
 const Home = async () => {
   const queryClient = getQueryClient();
   const cookieHeader = await getCookieHeader();
-
-  await queryClient.prefetchQuery({
-    queryKey: getArticleControllerFindAllQueryKey(),
-    queryFn: () => articleControllerFindAll(),
-    staleTime: 60 * 1000,
-  });
 
   const userProfile = await queryClient.fetchQuery({
     queryKey: getAuthControllerGetProfileQueryKey(),

@@ -8,7 +8,7 @@ import styles from './shared-input.module.scss';
 const SharedInput = forwardRef<HTMLInputElement, SharedInputProps>(
   ({ label, error, register, id, className, autoComplete, ...props }, ref) => {
     return (
-      <div className={styles['container']}>
+      <div className={cx(styles['container'], error && styles['has-error'])}>
         <label htmlFor={id} className={styles['label']}>
           {label}
         </label>

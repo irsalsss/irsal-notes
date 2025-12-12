@@ -42,6 +42,17 @@
     }
   }
 
+  &.has-error {
+    .input {
+      border-color: var(--color-error);
+
+      &:focus {
+        border-color: var(--color-error);
+        outline-color: var(--color-error);
+      }
+    }
+  }
+
   .error {
     font-size: var(--font-size-sm);
     color: var(--color-error);

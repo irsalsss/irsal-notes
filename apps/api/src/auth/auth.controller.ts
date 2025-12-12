@@ -21,7 +21,7 @@ import { User } from 'src/users/entities/user.entity';
 import { AuthGuard, RequestWithUser } from './auth.guard';
 import { UsersService } from 'src/users/users.service';
 
-export const EXPIRATION_TIME = 60 * 60 * 1000; // 60 minutes
+export const EXPIRATION_TIME = 60 * 60 * 24 * 30 * 1000; // 30 days
 
 @Controller('auth')
 @ApiTags('auth')

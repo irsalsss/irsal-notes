@@ -20,11 +20,20 @@ export class ArticleService {
     });
   }
 
-  findAll(userId: number) {
+  findAll(userId?: number) {
+    if (userId) {
+      // If authenticated, return user's published articles
+      return this.prisma.article.findMany({
+        where: {
+          published: true,
+          userId,
+        },
+      });
+    }
+    // If not authenticated, return all published articles
     return this.prisma.article.findMany({
       where: {
         published: true,
-        userId,
       },
     });
   }
@@ -38,7 +47,7 @@ export class ArticleService {
     });
   }
 
-  async findOne(id: number, userId: number) {
+  async findOne(id: number, userId?: number) {
     const article = await this.prisma.article.findUnique({
       where: { id },
     });
@@ -47,7 +56,13 @@ export class ArticleService {
       throw new NotFoundException(`Article with ID ${id} not found`);
     }
 
-    if (article.userId !== userId) {
+    // If article is published, anyone can access it
+    if (article.published) {
+      return article;
+    }
+
+    // If article is not published, only the owner can access it
+    if (!userId || article.userId !== userId) {
       throw new ForbiddenException('You do not have access to this article');
     }
 

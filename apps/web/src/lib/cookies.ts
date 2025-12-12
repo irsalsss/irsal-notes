@@ -10,3 +10,7 @@ export const getCookieHeader = async (): Promise<string> => {
   return cookieStore.toString();
 };
 
+export const setHeadersWithCookie = async (): Promise<RequestInit | undefined> => {
+  const cookieHeader = await getCookieHeader();
+  return cookieHeader ? { headers: { Cookie: cookieHeader } } : undefined;
+}
