@@ -39,14 +39,17 @@ RUN adduser --system --uid 1001 appuser
 RUN chown appuser:nodejs /app
 
 RUN echo '#!/bin/sh' > /app/start.sh && \
-    echo 'echo "--- DEBUG: Looking for server.js ---"' >> /app/start.sh && \
-    echo 'find . -name "server.js"' >> /app/start.sh && \
-    echo 'echo "--- Running Prisma Migrations ---"' >> /app/start.sh && \
+    echo 'echo "--- STARTING PRISMA MIGRATIONS ---"' >> /app/start.sh && \
     echo 'cd /app/apps/api && ./node_modules/.bin/prisma migrate deploy' >> /app/start.sh && \
-    echo 'echo "--- Starting NestJS on Port 3001 ---"' >> /app/start.sh && \
-    echo 'cd /app/apps/api && PORT=3001 node dist/src/main &' >> /app/start.sh && \
-    echo 'echo "--- Starting Next.js on Port 3000 ---"' >> /app/start.sh && \
-    echo 'cd /app && PORT=3000 HOSTNAME=0.0.0.0 exec node apps/web/server.js' >> /app/start.sh && \
+    echo 'echo "--- STARTING NESTJS ON 3001 ---"' >> /app/start.sh && \
+    echo 'cd /app/apps/api && node dist/src/main &' >> /app/start.sh && \
+    echo 'echo "--- STARTING NEXTJS ON 3000 ---"' >> /app/start.sh && \
+    echo 'cd /app' >> /app/start.sh && \
+    echo 'if [ -f "apps/web/server.js" ]; then' >> /app/start.sh && \
+    echo '  PORT=3000 HOSTNAME=0.0.0.0 node apps/web/server.js' >> /app/start.sh && \
+    echo 'else' >> /app/start.sh && \
+    echo '  PORT=3000 HOSTNAME=0.0.0.0 node server.js' >> /app/start.sh && \
+    echo 'fi' >> /app/start.sh && \
     chmod +x /app/start.sh && \
     chown appuser:nodejs /app/start.sh
 
