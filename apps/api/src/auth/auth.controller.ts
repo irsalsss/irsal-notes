@@ -42,6 +42,9 @@ export class AuthController {
       signUpDto.password,
     );
 
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+    console.log('hehehehehehe:', frontendUrl)
+
     // Set httpOnly cookie with the access token
     response.cookie('access_token', result.access_token, {
       httpOnly: true,
