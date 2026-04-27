@@ -11,9 +11,14 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe());
   app.use(cookieParser());
+  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+  const origins = frontendUrl.split(',').map(url => url.trim().replace(/\/$/, ''));
+
   app.enableCors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    origin: origins,
     credentials: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    allowedHeaders: 'Content-Type, Accept, Authorization',
   });
 
   const config = new DocumentBuilder()
