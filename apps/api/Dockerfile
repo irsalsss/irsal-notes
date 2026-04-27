@@ -49,4 +49,4 @@ USER appuser
 EXPOSE 3001
 
 # Entry point for the API
-CMD ["sh", "-c", "./node_modules/.bin/prisma migrate deploy && node dist/src/main"]
+CMD ["sh", "-c", "pnpm run prisma:migrate:deploy && pnpm run start:prod"]

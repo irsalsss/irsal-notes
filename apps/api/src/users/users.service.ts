@@ -128,6 +128,11 @@ export class UsersService {
         where: { email },
       });
     } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError && error.code === 'P2021') {
+        throw new InternalServerErrorException(
+          'Database table does not exist. Please run database migrations.',
+        );
+      }
       console.error('Error finding user by email:', error);
       return null;
     }
