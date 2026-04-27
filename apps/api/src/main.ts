@@ -12,6 +12,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.use(cookieParser());
   const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+  console.log('frontendUrl,', frontendUrl)
   const origins = frontendUrl.split(',').map(url => url.trim().replace(/\/$/, ''));
   console.log(`Environment: ${process.env.NODE_ENV}`);
   console.log(`CORS: allowing origins: ${origins.join(', ')}`);
