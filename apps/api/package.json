@@ -5,11 +5,15 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
+  "files": [
+    "dist",
+    "prisma"
+  ],
   "prisma": {
     "schema": "prisma/schema.prisma"
   },
   "scripts": {
-    "build": "prisma generate && nest build && node dist/generate-swagger.js",
+    "build": "prisma generate && nest build && node dist/src/generate-swagger.js",
     "postinstall": "prisma generate",
     "prisma": "prisma",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",

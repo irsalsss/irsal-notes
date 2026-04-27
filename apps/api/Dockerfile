@@ -20,10 +20,7 @@ COPY apps/web/package.json ./apps/web/
 # Install dependencies WITHOUT triggering Prisma postinstall
 RUN pnpm install --frozen-lockfile --ignore-scripts
 
-COPY apps/api/src/ ./apps/api/src/
-COPY apps/api/tsconfig*.json ./apps/api/
-COPY apps/api/nest-cli.json* ./apps/api/
-COPY apps/api/prisma/ ./apps/api/prisma/
+COPY apps/api/ ./apps/api/
 
 # Explicitly generate Prisma client now that ALL files are present
 RUN cd apps/api && pnpm prisma generate
