@@ -1,3 +1,6 @@
+@use '@repo/ui/styles/variables' as *;
+@use '@repo/ui/styles/typography' as *;
+
 .tabs {
   display: flex;
   gap: var(--spacing-2);
@@ -6,9 +9,7 @@
 
   .tab {
     padding: var(--spacing-3) var(--spacing-6);
-    font-size: var(--font-size-base);
-    font-weight: var(--font-weight-medium);
-    font-family: var(--font-sans);
+    @include apply-typography('subtitle-2');
     color: var(--color-body-muted);
     background: transparent;
     border: none;

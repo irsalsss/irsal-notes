@@ -1,3 +1,6 @@
+@use '../styles/variables' as *;
+@use '../styles/typography' as *;
+
 .overlay {
   position: fixed;
   inset: 0;
@@ -35,20 +38,15 @@
 }
 
 .title {
-  font-size: var(--font-size-xl, 1.25rem);
-  font-weight: var(--font-weight-semibold, 600);
-  font-family: var(--font-sans);
+  @include apply-typography('h5');
   color: var(--color-foreground);
-  line-height: var(--line-height-tight, 1.25);
   margin: 0;
   padding-right: var(--spacing-8, 2rem);
 }
 
 .description {
-  font-size: var(--font-size-base, 1rem);
-  font-family: var(--font-sans);
+  @include apply-typography('body-m');
   color: var(--color-body-muted);
-  line-height: var(--line-height-relaxed, 1.5);
   margin: var(--spacing-2, 0.5rem) 0 0;
   padding-right: var(--spacing-8, 2rem);
 }

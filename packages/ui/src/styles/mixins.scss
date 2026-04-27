@@ -1,0 +1,27 @@
+@mixin rwd($size) {
+  @if $size == sm {
+    @media screen and (max-width: 767px) {
+      @content;
+    }
+  }
+  @if $size == sm-up {
+    @media screen and (min-width: 768px) {
+      @content;
+    }
+  }
+  @else if $size == md {
+    @media screen and (min-width: 768px) and (max-width: 991px) {
+      @content;
+    }
+  }
+  @else if $size == sm-md {
+    @media screen and (max-width: 991px) {
+      @content;
+    }
+  }
+  @else if $size == lg {
+    @media screen and (min-width: 992px) {
+      @content;
+    }
+  }
+}

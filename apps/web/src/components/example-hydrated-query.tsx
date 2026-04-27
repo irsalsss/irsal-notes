@@ -34,7 +34,7 @@ export function ExampleHydratedQuery() {
       <p>{data?.message}</p>
       <p
         style={{
-          fontSize: 'var(--font-size-sm)',
+          fontSize: '14px',
           color: 'var(--color-body-muted)',
           marginTop: 'var(--spacing-2)',
         }}

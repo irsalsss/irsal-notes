@@ -12,6 +12,7 @@
   },
   "exports": {
     ".": "./src/index.ts",
+    "./styles/*": "./src/styles/*",
     "./*": [
       "./src/*.tsx",
       "./src/*/index.tsx"

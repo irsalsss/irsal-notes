@@ -1,20 +1,21 @@
+@use '../styles/variables' as *;
+@use '../styles/typography' as *;
+
 .container {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-2);
 
   .label {
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-medium);
+    @include apply-typography('input-label');
     color: var(--color-foreground);
-    line-height: var(--line-height-normal);
+    margin-bottom: 0; // Override mixin margin if needed
   }
 
   .input {
     width: 100%;
     padding: var(--spacing-3) var(--spacing-4);
-    font-size: var(--font-size-base);
-    font-family: var(--font-sans);
+    @include apply-typography('body-m');
     color: var(--color-foreground);
     background-color: var(--color-background);
     border: 1px solid var(--color-border);
@@ -54,7 +55,7 @@
   }
 
   .error {
-    font-size: var(--font-size-sm);
+    @include apply-typography('body-s');
     color: var(--color-error);
     margin-top: var(--spacing-1);
   }

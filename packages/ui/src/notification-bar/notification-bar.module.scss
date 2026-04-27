@@ -1,11 +1,13 @@
+@use '../styles/variables' as *;
+@use '../styles/typography' as *;
+
 .notification {
   display: flex;
   align-items: center;
   gap: var(--spacing-3, 0.75rem);
   padding: var(--spacing-4, 1rem);
   border-radius: var(--radius-lg, 0.5rem);
-  font-size: var(--font-size-base, 1rem);
-  font-family: var(--font-sans);
+  @include apply-typography('body-m');
   box-shadow: var(--shadow-md);
   min-width: 300px;
   max-width: 500px;

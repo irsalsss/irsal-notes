@@ -1,11 +1,12 @@
+@use '../styles/variables' as *;
+@use '../styles/typography' as *;
+
 .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: var(--spacing-3) var(--spacing-6);
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-medium);
-  font-family: var(--font-sans);
+  @include apply-typography('button-l');
   border: none;
   border-radius: var(--radius-lg);
   cursor: pointer;

@@ -1,3 +1,6 @@
+@use '@repo/ui/styles/variables' as *;
+@use '@repo/ui/styles/typography' as *;
+
 .panel {
   display: flex;
   justify-content: center;
@@ -11,8 +14,7 @@
   }
 
   .heading {
-    font-size: var(--font-size-2xl);
-    font-weight: var(--font-weight-bold);
+    @include apply-typography('h4');
     margin-bottom: var(--spacing-8);
     text-align: center;
   }
@@ -20,12 +22,12 @@
   .linkContainer {
     margin-top: var(--spacing-6);
     text-align: center;
-    font-size: var(--font-size-sm);
+    @include apply-typography('body-s');
 
     .link {
       color: var(--color-primary);
       text-decoration: none;
-      font-weight: var(--font-weight-medium);
+      font-weight: $font-weight-medium;
       transition: opacity 0.2s;
 
       &:hover {

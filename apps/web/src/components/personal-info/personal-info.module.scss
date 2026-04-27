@@ -1,3 +1,5 @@
+@use "@repo/ui/styles/typography" as *;
+
 .section {
   display: flex;
   flex-direction: column;
@@ -26,27 +28,22 @@
     gap: 0.5rem;
 
     .full-name {
-      font-size: 1.875rem;
-      font-weight: 500;
-      line-height: 1.2;
+      @include apply-typography('h2');
     }
 
     .job-title {
-      font-size: 1rem;
+      @include apply-typography('body-m');
       color: var(--muted);
-      font-weight: 400;
     }
 
     .email {
-      font-size: 0.875rem;
+      @include apply-typography('body-s');
       color: var(--muted);
-      font-weight: 400;
     }
   }
 
   .professional-journey {
-    font-size: 0.9375rem;
-    line-height: 1.7;
+    @include apply-typography('body-m');
     color: var(--foreground);
     max-width: 600px;
     text-align: left;
@@ -56,10 +53,10 @@
 
       > div {
         p {
+          @include apply-typography('body-m');
           text-align: justify;
           margin: 0 0 1rem 0;
           padding: 0;
-          line-height: 1.7;
 
           &:last-child {
             margin-bottom: 0;
@@ -95,8 +92,8 @@
           text-align: left;
 
           li {
+            @include apply-typography('body-m');
             margin: 0.5rem 0;
-            line-height: 1.7;
           }
         }
 
@@ -108,26 +105,18 @@
         }
 
         code {
+          @include apply-typography('code');
           background-color: var(--muted);
           padding: 0.2em 0.4em;
           border-radius: 0.25rem;
-          font-size: 0.9em;
         }
 
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-          margin: 1.5rem 0 1rem 0;
-          font-weight: 600;
-          line-height: 1.3;
-
-          &:first-child {
-            margin-top: 0;
-          }
-        }
+        h1 { @include apply-typography('h1'); margin: 1.5rem 0 1rem 0; &:first-child { margin-top: 0; } }
+        h2 { @include apply-typography('h2'); margin: 1.5rem 0 1rem 0; &:first-child { margin-top: 0; } }
+        h3 { @include apply-typography('h3'); margin: 1.5rem 0 1rem 0; &:first-child { margin-top: 0; } }
+        h4 { @include apply-typography('h4'); margin: 1.5rem 0 1rem 0; &:first-child { margin-top: 0; } }
+        h5 { @include apply-typography('h5'); margin: 1.5rem 0 1rem 0; &:first-child { margin-top: 0; } }
+        h6 { @include apply-typography('h6'); margin: 1.5rem 0 1rem 0; &:first-child { margin-top: 0; } }
       }
     }
   }

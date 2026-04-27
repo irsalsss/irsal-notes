@@ -1,5 +1,8 @@
+@use "@repo/ui/styles/variables" as *;
+@use "@repo/ui/styles/typography" as *;
+
 .container {
-  max-width: 680px;
+  max-width: $content-max-width;
   margin: 0 auto;
   padding: var(--spacing-6) var(--spacing-6) var(--spacing-16);
 
@@ -12,11 +15,9 @@
     gap: var(--spacing-4);
 
     .title {
-      font-size: var(--font-size-4xl);
-      font-weight: var(--font-weight-bold);
+      @include apply-typography('h1');
       color: var(--color-heading);
       margin: 0;
-      line-height: var(--line-height-tight);
     }
 
     .create-button {
@@ -24,9 +25,7 @@
       align-items: center;
       justify-content: center;
       padding: var(--spacing-3) var(--spacing-6);
-      font-size: var(--font-size-base);
-      font-weight: var(--font-weight-medium);
-      font-family: var(--font-sans);
+      @include apply-typography('button-l');
       border: none;
       border-radius: var(--radius-lg);
       cursor: pointer;
@@ -77,23 +76,20 @@
       }
 
       .article-title {
-        font-size: var(--font-size-2xl);
-        font-weight: var(--font-weight-semibold);
+        @include apply-typography('h3');
         color: var(--color-heading);
         margin: 0;
-        line-height: var(--line-height-snug);
         transition: color var(--transition-base);
       }
 
       .article-content {
-        font-size: var(--font-size-base);
+        @include apply-typography('body-m');
         color: var(--color-body-muted);
-        line-height: var(--line-height-relaxed);
         margin: 0;
       }
 
       .article-date {
-        font-size: var(--font-size-sm);
+        @include apply-typography('body-s');
         color: var(--color-caption);
         margin-top: var(--spacing-2);
       }
@@ -105,7 +101,7 @@
       color: var(--color-muted);
 
       p {
-        font-size: var(--font-size-lg);
+        @include apply-typography('lead');
         margin: 0;
       }
     }

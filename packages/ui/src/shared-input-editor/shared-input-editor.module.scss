@@ -1,3 +1,5 @@
+@use '../styles/typography' as *;
+
 .container {
   display: flex;
   flex-direction: column;
@@ -8,9 +10,8 @@
   }
 
   .label {
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-medium);
+    @include apply-typography('input-label');
     color: var(--color-foreground);
-    line-height: var(--line-height-normal);
+    margin-bottom: 0;
   }
 }

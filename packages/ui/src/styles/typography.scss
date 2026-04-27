@@ -1,0 +1,168 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// --- Typography Scale Map ---
+$typography-styles: (
+  // Headings
+  "h1": (
+    "font-size": 2.5rem,
+    "line-height": 1.2,
+    "letter-spacing": -0.02em,
+    "font-weight": $font-weight-bold,
+    "margin-bottom": 1.5rem
+  ),
+  "h2": (
+    "font-size": 2rem,
+    "line-height": 1.25,
+    "letter-spacing": -0.01em,
+    "font-weight": $font-weight-bold,
+    "margin-bottom": 1.25rem
+  ),
+  "h3": (
+    "font-size": 1.75rem,
+    "line-height": 1.3,
+    "letter-spacing": -0.01em,
+    "font-weight": $font-weight-semibold,
+    "margin-bottom": 1rem
+  ),
+  "h4": (
+    "font-size": 1.5rem,
+    "line-height": 1.35,
+    "font-weight": $font-weight-semibold,
+    "margin-bottom": 1rem
+  ),
+  "h5": (
+    "font-size": 1.25rem,
+    "line-height": 1.4,
+    "font-weight": $font-weight-semibold,
+    "margin-bottom": 0.75rem
+  ),
+  "h6": (
+    "font-size": 1rem,
+    "line-height": 1.4,
+    "font-weight": $font-weight-semibold,
+    "margin-bottom": 0.5rem
+  ),
+
+  // Subtitles
+  "subtitle-1": (
+    "font-size": 1.125rem,
+    "line-height": 1.5,
+    "font-weight": $font-weight-medium,
+    "letter-spacing": 0.01em,
+    "margin-bottom": 0.5rem
+  ),
+  "subtitle-2": (
+    "font-size": 1rem,
+    "line-height": 1.5,
+    "font-weight": $font-weight-medium,
+    "letter-spacing": 0.01em,
+    "margin-bottom": 0.5rem
+  ),
+
+  // Body
+  "lead": (
+    "font-size": 1.25rem,
+    "line-height": 1.6,
+    "font-weight": $font-weight-light,
+    "margin-bottom": 1.25rem
+  ),
+  "body-xl": (
+    "font-size": 1.25rem,
+    "line-height": 1.6,
+    "font-weight": $font-weight-normal,
+    "margin-bottom": 1rem
+  ),
+  "body-l": (
+    "font-size": 1.125rem,
+    "line-height": 1.6,
+    "font-weight": $font-weight-normal,
+    "margin-bottom": 1rem
+  ),
+  "body-m": (
+    "font-size": 1rem,
+    "line-height": 1.6,
+    "font-weight": $font-weight-normal,
+    "margin-bottom": 1rem
+  ),
+  "body-s": (
+    "font-size": 0.875rem,
+    "line-height": 1.5,
+    "font-weight": $font-weight-normal,
+    "margin-bottom": 0.75rem
+  ),
+  "body-xs": (
+    "font-size": 0.75rem,
+    "line-height": 1.4,
+    "font-weight": $font-weight-normal,
+    "margin-bottom": 0.75rem
+  ),
+
+  // UI Elements
+  "input-label": (
+    "font-size": 0.875rem,
+    "line-height": 1.4,
+    "font-weight": $font-weight-medium,
+    "display": block,
+    "margin-bottom": 0.5rem
+  ),
+  "button-l": (
+    "font-size": 1rem,
+    "line-height": 1,
+    "font-weight": $font-weight-semibold,
+    "letter-spacing": 0.01em
+  ),
+  "button-m": (
+    "font-size": 0.875rem,
+    "line-height": 1,
+    "font-weight": $font-weight-semibold,
+    "letter-spacing": 0.01em
+  ),
+  "caption": (
+    "font-size": 0.75rem,
+    "line-height": 1.4,
+    "font-weight": $font-weight-normal,
+    "color": inherit, // Can be overridden in component
+    "margin-bottom": 0.5rem
+  ),
+  "overline": (
+    "font-size": 0.75rem,
+    "line-height": 1.2,
+    "text-transform": uppercase,
+    "letter-spacing": 0.1em,
+    "font-weight": $font-weight-bold,
+    "margin-bottom": 0.5rem
+  ),
+  "code": (
+    "font-family": $font-family-mono,
+    "font-size": 0.875rem,
+    "line-height": 1.5,
+    "margin-bottom": 1rem
+  )
+);
+
+// --- Mixin to apply typography style ---
+@mixin apply-typography($style-name, $weight: null) {
+  @if not map-has-key($typography-styles, $style-name) {
+    @warn "Unknown typography style '#{$style-name}' in $typography-styles.";
+  } @else {
+    $style: map-get($typography-styles, $style-name);
+
+    @each $property, $value in $style {
+      @if $property != "font-weight" {
+        #{$property}: $value;
+      }
+    }
+
+    // Set font-weight: priority is argument > map value > default (400)
+    $final-weight: $weight;
+    @if $final-weight == null {
+      $final-weight: map-get($style, "font-weight");
+    }
+    @if $final-weight == null {
+      $final-weight: 400;
+    }
+
+    font-weight: $final-weight;
+  }
+}

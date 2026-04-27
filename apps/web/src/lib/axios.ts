@@ -8,6 +8,7 @@ const baseURL = isServer
 export const AXIOS_INSTANCE = axios.create({
   baseURL,
   withCredentials: true,
+  proxy: false,
 });
 
 AXIOS_INSTANCE.interceptors.response.use(

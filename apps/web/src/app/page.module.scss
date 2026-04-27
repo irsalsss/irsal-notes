@@ -1,6 +1,9 @@
+@use "@repo/ui/styles/variables" as *;
+
 .container {
-  max-width: 680px;
+  max-width: $content-max-width;
   margin: 0 auto;
   padding: var(--spacing-6) var(--spacing-6) var(--spacing-16);
 }
+
 
