@@ -13,12 +13,18 @@ async function bootstrap() {
   app.use(cookieParser());
   const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
   const origins = frontendUrl.split(',').map(url => url.trim().replace(/\/$/, ''));
+  console.log(`Environment: ${process.env.NODE_ENV}`);
+  console.log(`CORS: allowing origins: ${origins.join(', ')}`);
+
+  if (!process.env.DATABASE_URL) {
+    console.warn('WARNING: DATABASE_URL is not set!');
+  }
 
   app.enableCors({
     origin: origins,
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    allowedHeaders: 'Content-Type, Accept, Authorization',
+    allowedHeaders: 'Content-Type, Accept, Authorization, Set-Cookie',
   });
 
   const config = new DocumentBuilder()
@@ -38,7 +44,8 @@ async function bootstrap() {
 
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(3001, '0.0.0.0');
-  console.log(`Application is running on: ${await app.getUrl()}`);
+  const port = process.env.PORT || 3001;
+  await app.listen(port, '0.0.0.0');
+  console.log(`Application is running on port: ${port}`);
 }
 bootstrap();
