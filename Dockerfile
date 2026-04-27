@@ -39,11 +39,11 @@ RUN adduser --system --uid 1001 appuser
 RUN chown appuser:nodejs /app
 
 RUN echo '#!/bin/sh' > /app/start.sh && \
-    echo 'echo "Starting Prisma migrations..."' >> /app/start.sh && \
+    echo 'echo "--- Running Prisma Migrations ---"' >> /app/start.sh && \
     echo 'cd /app/apps/api && ./node_modules/.bin/prisma migrate deploy' >> /app/start.sh && \
-    echo 'echo "Starting API on port 3001..."' >> /app/start.sh && \
-    echo 'cd /app/apps/api && PORT=3001 node dist/src/main &' >> /app/start.sh && \
-    echo 'echo "Starting Web on port 3000..."' >> /app/start.sh && \
+    echo 'echo "--- Starting NestJS (API) on Port 3001 ---"' >> /app/start.sh && \
+    echo 'cd /app/apps/api && node dist/src/main &' >> /app/start.sh && \
+    echo 'echo "--- Starting Next.js (Web) on Port 3000 ---"' >> /app/start.sh && \
     echo 'cd /app && PORT=3000 HOSTNAME=0.0.0.0 node apps/web/server.js' >> /app/start.sh && \
     chmod +x /app/start.sh && \
     chown appuser:nodejs /app/start.sh
