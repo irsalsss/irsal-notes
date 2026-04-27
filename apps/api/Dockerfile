@@ -9,9 +9,10 @@ RUN apt-get update -y && apt-get install -y openssl procps && rm -rf /var/lib/ap
 FROM base AS builder
 WORKDIR /app
 
-# Copy root files for pnpm
-COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
+# FIX 1: Copy root config files (tsconfig, nest-cli) required for module resolution
+COPY pnpm-lock.yaml pnpm-workspace.yaml package.json tsconfig*.json nest-cli.json* ./
 COPY packages/ ./packages/
+
 # Copy all package.json files to satisfy pnpm workspace
 COPY apps/api/package.json ./apps/api/
 COPY apps/web/package.json ./apps/web/
@@ -19,8 +20,10 @@ COPY apps/web/package.json ./apps/web/
 # Install dependencies WITHOUT triggering Prisma postinstall
 RUN pnpm install --frozen-lockfile --ignore-scripts
 
-# Copy the rest of the api code (including the Prisma schema)
-COPY apps/api/ ./apps/api/
+COPY apps/api/src/ ./apps/api/src/
+COPY apps/api/tsconfig*.json ./apps/api/
+COPY apps/api/nest-cli.json* ./apps/api/
+COPY apps/api/prisma/ ./apps/api/prisma/
 
 # Explicitly generate Prisma client now that ALL files are present
 RUN cd apps/api && pnpm prisma generate

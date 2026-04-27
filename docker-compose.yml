@@ -26,20 +26,6 @@ services:
     depends_on:
       - db
 
-  web:
-    build:
-      context: .
-      dockerfile: apps/web/Dockerfile
-      args:
-        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
-    restart: always
-    environment:
-      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
-      INTERNAL_API_URL: ${INTERNAL_API_URL:-http://api:3001}
-    ports:
-      - "3000:3000"
-    depends_on:
-      - api
 
 volumes:
   postgres_data:
