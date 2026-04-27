@@ -13,9 +13,9 @@
     "schema": "prisma/schema.prisma"
   },
   "scripts": {
-    "build": "prisma generate && nest build && node dist/src/generate-swagger.js",
-    "vercel-build": "prisma generate && nest build",
-    "postinstall": "prisma generate",
+    "build": "npx prisma generate --schema=prisma/schema.prisma && nest build && node dist/src/generate-swagger.js",
+    "vercel-build": "npx prisma generate --schema=prisma/schema.prisma && nest build",
+    "postinstall": "npx prisma generate --schema=prisma/schema.prisma",
     "prisma": "prisma",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "dev": "pnpm start:dev",
@@ -23,7 +23,7 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/src/main",
-    "prisma:generate": "prisma generate",
+    "prisma:generate": "npx prisma generate --schema=prisma/schema.prisma",
     "prisma:migrate:deploy": "prisma migrate deploy",
     "prisma:migrate:dev": "prisma migrate dev",
     "prisma:studio": "prisma studio",
