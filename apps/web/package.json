@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev --webpack",
     "build": "next build",
-    "start": "next start",
+    "start": "node .next/standalone/apps/web/server.js",
     "lint": "eslint",
     "codegen": "orval && pnpm exec tsx scripts/fix-generated-api.ts"
   },
@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@tanstack/react-query-devtools": "^5.91.1",
+    "baseline-browser-mapping": "latest",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
