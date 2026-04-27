@@ -28,8 +28,8 @@ RUN cd apps/api && pnpm prisma generate
 # Build the api
 RUN pnpm --filter api run build
 
-# Deploy the API to an isolated folder with production dependencies
-RUN pnpm --filter api deploy --prod /app/out/api
+# Deploy the API to an isolated folder with production dependencies using the --legacy flag
+RUN pnpm --filter api deploy --prod --legacy /app/out/api
 
 # Generate Prisma client again in the deployed API folder
 RUN cd /app/out/api && ./node_modules/.bin/prisma generate
