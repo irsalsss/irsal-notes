@@ -1,6 +1,7 @@
 FROM node:20-slim AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
+ENV COREPACK_HOME="/tmp/corepack"
 RUN corepack enable
 
 # Install openssl for Prisma and procps for process management if needed
