@@ -14,6 +14,7 @@
   },
   "scripts": {
     "build": "prisma generate && nest build && node dist/src/generate-swagger.js",
+    "vercel-build": "prisma generate && nest build",
     "postinstall": "prisma generate",
     "prisma": "prisma",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",

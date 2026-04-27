@@ -35,7 +35,7 @@ export class AuthController {
   @ApiCreatedResponse({ type: User })
   async signUp(
     @Body() signUpDto: CreateUserDto,
-    @Res({ passthrough: true }) response: Response,
+    @Res({ passthrough: true }) response: any,
   ) {
     const result = await this.authService.signUp(
       signUpDto.email,
@@ -58,7 +58,7 @@ export class AuthController {
   @ApiOkResponse({ type: User })
   async signIn(
     @Body() signInDto: SignInDto,
-    @Res({ passthrough: true }) response: Response,
+    @Res({ passthrough: true }) response: any,
   ) {
     const result = await this.authService.signIn(
       signInDto.email,
@@ -86,7 +86,7 @@ export class AuthController {
 
   @Post('sign_out')
   @ApiOkResponse({ description: 'Sign out successful' })
-  signOut(@Res({ passthrough: true }) response: Response) {
+  signOut(@Res({ passthrough: true }) response: any) {
     response.clearCookie('access_token', {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
