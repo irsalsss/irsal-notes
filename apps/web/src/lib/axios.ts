@@ -1,7 +1,12 @@
 import axios, { type AxiosRequestConfig, Method, type AxiosError } from 'axios';
 
+const isServer = typeof window === 'undefined';
+const baseURL = isServer 
+  ? (process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001')
+  : (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001');
+
 export const AXIOS_INSTANCE = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001',
+  baseURL,
   withCredentials: true,
 });
 

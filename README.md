@@ -4,6 +4,40 @@ A monorepo application with a Next.js web app and NestJS API server.
 
 ## How to Run
 
+### Docker Setup (Recommended)
+
+The easiest way to run the entire stack (Database, API, and Web) is using Docker.
+
+**Prerequisites:**
+- [Docker](https://www.docker.com/products/docker-desktop/) installed on your machine.
+
+**Steps:**
+
+1.  **Clone the repository** (if you haven't already).
+2.  **Start the application:**
+
+    ```bash
+    docker-compose up --build
+    ```
+
+    This will:
+    - Build the images for both `api` and `web`.
+    - Spin up a PostgreSQL database.
+    - Automatically run database migrations.
+    - Start the **Web App** at `http://localhost:3000`.
+    - Start the **API Server** at `http://localhost:3001`.
+
+**Database Credentials (Default):**
+- **User:** `postgres`
+- **Password:** `postgres`
+- **Database:** `irsal_notes`
+- **Host:** `localhost` (from your machine) or `db` (inside Docker)
+- **Port:** `5432`
+
+---
+
+### Local Setup (Manual)
+
 ### Prerequisites
 
 - **Node.js** (v18+)
@@ -109,16 +143,6 @@ This monorepo includes the following packages/apps:
 - `packages/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
 - `packages/typescript-config`: `tsconfig.json`s used throughout the monorepo
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This monorepo has some additional tools already setup for you:
-
-- [Turborepo](https://turborepo.com/) for monorepo task orchestration
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
 
 ### Build
 
@@ -157,36 +181,3 @@ pnpm dev --filter=web
 # Develop only the API
 pnpm dev --filter=api
 ```
-
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```bash
-# From the root directory
-pnpm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```bash
-pnpm exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)

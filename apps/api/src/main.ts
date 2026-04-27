@@ -24,8 +24,12 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
 
   const outputPath = path.resolve(process.cwd(), 'swagger.json');
-  fs.writeFileSync(outputPath, JSON.stringify(document, null, 2));
-  console.log(`Swagger JSON written to ${outputPath}`);
+  try {
+    fs.writeFileSync(outputPath, JSON.stringify(document, null, 2));
+    console.log(`Swagger JSON written to ${outputPath}`);
+  } catch (error) {
+    console.warn(`Could not write Swagger JSON to ${outputPath}: ${error.message}`);
+  }
 
   SwaggerModule.setup('api', app, document);
 

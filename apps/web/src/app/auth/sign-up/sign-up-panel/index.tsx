@@ -10,7 +10,7 @@ import {
 import { showNotification } from '@repo/ui';
 import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
-import { SignUpDto } from '@/features/api/model';
+import { SignUpDto } from '@/features/api/model/signUpDto';
 
 const SignUpPanel = () => {
   const router = useRouter();
