@@ -2,7 +2,7 @@ FROM node:20-slim AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 ENV COREPACK_HOME="/tmp/corepack"
-RUN corepack enable
+RUN npm install -g pnpm@10.33.2
 
 # Install openssl for Prisma and procps for process management if needed
 RUN apt-get update -y && apt-get install -y openssl procps && rm -rf /var/lib/apt/lists/*
@@ -38,7 +38,6 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 appuser
 RUN chown appuser:nodejs /app
 
-# Create a startup script to run both applications
 RUN echo '#!/bin/sh' > /app/start.sh && \
     echo 'echo "Starting Prisma migrations..."' >> /app/start.sh && \
     echo 'cd /app/apps/api && ./node_modules/.bin/prisma migrate deploy' >> /app/start.sh && \
@@ -51,14 +50,11 @@ RUN echo '#!/bin/sh' > /app/start.sh && \
 
 USER appuser
 
-# Copy Next.js standalone output
-# This creates /app/node_modules, /app/apps/web/server.js, etc.
 COPY --from=builder --chown=appuser:nodejs /app/apps/web/.next/standalone ./
+
 COPY --from=builder --chown=appuser:nodejs /app/apps/web/.next/static ./apps/web/.next/static
 COPY --from=builder --chown=appuser:nodejs /app/apps/web/public ./apps/web/public
 
-# Copy the isolated API build
-# This creates /app/apps/api/dist, /app/apps/api/node_modules, etc.
 COPY --from=builder --chown=appuser:nodejs /app/out/api ./apps/api
 
 # Expose both ports
