@@ -20,7 +20,7 @@ COPY . .
 RUN pnpm install --frozen-lockfile
 
 # Generate Prisma client for the API
-RUN cd apps/api && npx prisma generate
+RUN cd apps/api && ./node_modules/.bin/prisma generate
 
 # Build the entire monorepo (Next.js and NestJS)
 RUN pnpm run build
@@ -28,7 +28,7 @@ RUN pnpm run build
 # Deploy the API to an isolated folder with production dependencies
 RUN pnpm --filter api deploy --prod /app/out/api
 # Generate Prisma client again in the deployed API folder to ensure the binary is present
-RUN cd /app/out/api && npx prisma generate
+RUN cd /app/out/api && ./node_modules/.bin/prisma generate
 
 FROM base AS runner
 WORKDIR /app
@@ -40,7 +40,7 @@ RUN chown appuser:nodejs /app
 # Create a startup script to run both applications
 RUN echo '#!/bin/sh' > /app/start.sh && \
     echo 'echo "Starting Prisma migrations..."' >> /app/start.sh && \
-    echo 'cd /app/apps/api && npx prisma migrate deploy' >> /app/start.sh && \
+    echo 'cd /app/apps/api && ./node_modules/.bin/prisma migrate deploy' >> /app/start.sh && \
     echo 'echo "Starting API on port 3001..."' >> /app/start.sh && \
     echo 'cd /app/apps/api && PORT=3001 node dist/src/main &' >> /app/start.sh && \
     echo 'echo "Starting Web on port 3000..."' >> /app/start.sh && \
