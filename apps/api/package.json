@@ -9,7 +9,9 @@
     "schema": "prisma/schema.prisma"
   },
   "scripts": {
-    "build": "nest build && node dist/src/generate-swagger",
+    "build": "prisma generate && nest build && node dist/src/generate-swagger",
+    "postinstall": "prisma generate",
+    "prisma": "prisma",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "dev": "pnpm start:dev",
     "start": "node dist/src/main",
