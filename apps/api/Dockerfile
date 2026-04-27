@@ -16,20 +16,21 @@ COPY packages/ ./packages/
 COPY apps/api/package.json ./apps/api/
 COPY apps/web/package.json ./apps/web/
 
-# COPY THE PRISMA SCHEMA BEFORE PNPM INSTALL
-COPY apps/api/prisma/ ./apps/api/prisma/
+# Install dependencies WITHOUT triggering Prisma postinstall
+RUN pnpm install --frozen-lockfile --ignore-scripts
 
-# Install dependencies (Prisma postinstall will now succeed)
-RUN pnpm install --frozen-lockfile
-
-# Copy the rest of the api code
+# Copy the rest of the api code (including the Prisma schema)
 COPY apps/api/ ./apps/api/
+
+# Explicitly generate Prisma client now that ALL files are present
+RUN cd apps/api && pnpm prisma generate
 
 # Build the api
 RUN pnpm --filter api run build
 
 # Deploy the API to an isolated folder with production dependencies
 RUN pnpm --filter api deploy --prod /app/out/api
+
 # Generate Prisma client again in the deployed API folder
 RUN cd /app/out/api && ./node_modules/.bin/prisma generate
 
@@ -39,7 +40,7 @@ WORKDIR /app
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 appuser
 
-# COPY FILES WITH CORRECT CHOWN BEFORE SWITCHING USERS
+# Copy files with correct chown before switching users
 COPY --from=builder --chown=appuser:nodejs /app/out/api ./
 
 USER appuser
