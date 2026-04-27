@@ -48,5 +48,4 @@ USER appuser
 
 EXPOSE 3000
 
-# 3. Run the server exactly where Next.js placed it
-CMD ["node", "apps/web/server.js"]
+CMD ["sh", "-c", "if [ -f apps/web/server.js ]; then node apps/web/server.js; elif [ -f server.js ]; then node server.js; else echo 'CRITICAL ERROR: server.js NOT FOUND! Menampilkan isi direktori /app:' && ls -la && echo 'Menampilkan isi direktori /app/apps/web (jika ada):' && ls -la apps/web || true && exit 1; fi"]
