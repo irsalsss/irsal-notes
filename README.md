@@ -30,34 +30,13 @@ The backend is designed for scalability, maintainability, and enterprise-grade a
 ### 🏗 Infrastructure & Tooling
 *   **Turborepo**: High-performance build system for JavaScript and TypeScript monorepos, enabling remote caching and parallel execution.
 *   **pnpm**: Fast, disk space efficient package manager.
-*   **Docker & Docker Compose**: Containerization for consistent development and production environments.
+*   **Vercel**: Deployment and hosting for both Web and API.
 
 ---
 
 ## 🚀 Getting Started
 
-### Docker Setup (Recommended)
-
-The easiest way to spin up the entire stack (Database, API, and Web) is using Docker.
-
-**Prerequisites:**
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-
-**Steps:**
-1.  **Clone the repository**
-2.  **Start the services:**
-    ```bash
-    docker-compose up --build
-    ```
-    This will:
-    - Build images for `api` and `web`.
-    - Spin up a **PostgreSQL** database.
-    - Run database migrations automatically.
-    - Expose **Web App** at `http://localhost:3000` and **API** at `http://localhost:3001`.
-
----
-
-### Local Development (Manual)
+### Local Development
 
 **Prerequisites:**
 - Node.js (v20+)
@@ -91,9 +70,21 @@ The easiest way to spin up the entire stack (Database, API, and Web) is using Do
 
 ---
 
+## ☁️ Deployment
+
+This project is optimized for deployment on **Vercel**.
+
+### Web App
+Connect the repository to Vercel and set the **Root Directory** to `apps/web`. Vercel will automatically detect Next.js settings.
+
+### API App
+Connect the repository to Vercel and set the **Root Directory** to `apps/api`. Ensure all environment variables (like `DATABASE_URL`) are configured in the Vercel project settings.
+
+---
+
 ## 📖 API Documentation & Codegen
 
-- **Swagger UI**: Accessible at `http://localhost:3001/api` when the API is running.
+- **Swagger UI**: Accessible at `/api` when the API is running.
 - **Client Generation**: The frontend uses `orval` to generate hooks. To update the client after API changes:
   ```bash
   pnpm --filter web codegen
@@ -113,6 +104,7 @@ irsal-notes/
 │   ├── utils/        # Shared Utility Functions
 │   ├── eslint-config/# Shared ESLint presets
 │   └── tsconfig/     # Shared TypeScript configurations
-└── docker-compose.yml
+└── turbo.json
 ```
+
 
