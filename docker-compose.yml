@@ -1,13 +1,13 @@
 services:
   db:
-    image: postgres:15-alpine
+    image: supabase/postgres:15.6.1.115
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: irsal_notes
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
     ports:
-      - "5432:5432"
+      - "54322:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
@@ -17,11 +17,11 @@ services:
       dockerfile: apps/api/Dockerfile
     restart: always
     environment:
-      DATABASE_URL: "postgresql://postgres:postgres@db:5432/irsal_notes?schema=public"
-      DIRECT_URL: "postgresql://postgres:postgres@db:5432/irsal_notes?schema=public"
-      JWT_SECRET: "replace-with-a-secure-random-string"
+      DATABASE_URL: ${DATABASE_URL}
+      DIRECT_URL: ${DIRECT_URL}
+      JWT_SECRET: ${JWT_SECRET}
       PORT: 3001
-      FRONTEND_URL: "http://localhost:3000"
+      FRONTEND_URL: ${FRONTEND_URL}
     ports:
       - "3001:3001"
     depends_on:
@@ -34,11 +34,11 @@ services:
       context: .
       dockerfile: apps/web/Dockerfile
       args:
-        NEXT_PUBLIC_API_URL: "http://localhost:3001"
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
     restart: always
     environment:
-      NEXT_PUBLIC_API_URL: "http://localhost:3001"
-      INTERNAL_API_URL: "http://api:3001"
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+      INTERNAL_API_URL: ${INTERNAL_API_URL:-http://api:3001}
     ports:
       - "3000:3000"
     depends_on:
