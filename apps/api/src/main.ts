@@ -10,22 +10,34 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.useGlobalPipes(new ValidationPipe());
-  app.use(cookieParser());
+  
   const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
-  const origins = frontendUrl.split(',').map(url => url.trim().replace(/\/$/, ''));
+  // Strip potential quotes and trailing slashes
+  const origins = frontendUrl
+    .split(',')
+    .map((url) => url.trim().replace(/\/$/, '').replace(/^['"]|['"]$/g, ''));
+
   console.log(`Environment: ${process.env.NODE_ENV}`);
   console.log(`CORS: allowing origins: ${origins.join(', ')}`);
-
-  if (!process.env.DATABASE_URL) {
-    console.warn('WARNING: DATABASE_URL is not set!');
-  }
 
   app.enableCors({
     origin: origins,
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    allowedHeaders: 'Content-Type, Accept, Authorization, Set-Cookie',
+    allowedHeaders: [
+      'Content-Type',
+      'Accept',
+      'Authorization',
+      'X-Requested-With',
+      'X-HTTP-Method-Override',
+      'Set-Cookie',
+      'Cookie',
+    ],
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
   });
+
+  app.use(cookieParser());
 
   const config = new DocumentBuilder()
     .setTitle('Personal Engineering Platform API')
