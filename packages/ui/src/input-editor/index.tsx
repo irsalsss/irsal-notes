@@ -12,7 +12,7 @@ import ListItem from '@tiptap/extension-list-item';
 import CodeBlock from '@tiptap/extension-code-block';
 import HardBreak from '@tiptap/extension-hard-break';
 import HorizontalRule from '@tiptap/extension-horizontal-rule';
-import Image from '@tiptap/extension-image';
+import ResizableImage from './resizable-image/extension';
 import Mention from '@tiptap/extension-mention';
 import Bold from '@tiptap/extension-bold';
 import Italic from '@tiptap/extension-italic';
@@ -33,6 +33,7 @@ import {
 } from '@tiptap/extension-details';
 import Mathematics from '@tiptap/extension-mathematics';
 import Youtube from '@tiptap/extension-youtube';
+import History from '@tiptap/extension-history';
 import NodeControlGroup from './node-control-group';
 import styles from './input-editor.module.scss';
 import { useEffect, useState } from 'react';
@@ -44,6 +45,46 @@ interface InputEditorProps {
   error?: string;
   containerClassName?: string;
 }
+
+const CustomTableCell = TableCell.extend({
+  addAttributes() {
+    return {
+      ...this.parent?.(),
+      backgroundColor: {
+        default: null,
+        parseHTML: (element) => element.style.backgroundColor || null,
+        renderHTML: (attributes) => {
+          if (!attributes.backgroundColor) {
+            return {};
+          }
+          return {
+            style: `background-color: ${attributes.backgroundColor}`,
+          };
+        },
+      },
+    };
+  },
+});
+
+const CustomTableHeader = TableHeader.extend({
+  addAttributes() {
+    return {
+      ...this.parent?.(),
+      backgroundColor: {
+        default: null,
+        parseHTML: (element) => element.style.backgroundColor || null,
+        renderHTML: (attributes) => {
+          if (!attributes.backgroundColor) {
+            return {};
+          }
+          return {
+            style: `background-color: ${attributes.backgroundColor}`,
+          };
+        },
+      },
+    };
+  },
+});
 
 const InputEditor = ({
   defaultValue,
@@ -69,12 +110,14 @@ const InputEditor = ({
         },
         levels: [1, 2, 3, 4, 5, 6],
       }),
+      History,
       Bold,
       Italic,
       Underline,
       Strike,
       Link.configure({
         openOnClick: false,
+        autolink: false,
         HTMLAttributes: {
           class: 'link',
         },
@@ -86,16 +129,21 @@ const InputEditor = ({
       CodeBlock,
       HardBreak,
       HorizontalRule,
-      Image,
+      ResizableImage,
       Mention.configure({
         HTMLAttributes: {
           class: 'mention',
         },
       }),
-      TableKit,
+      TableKit.configure({
+        table: {
+          resizable: true,
+          lastColumnResizable: false,
+        },
+      }),
       TableRow,
-      TableHeader,
-      TableCell,
+      CustomTableCell,
+      CustomTableHeader,
       TaskList,
       TaskItem.configure({
         nested: true,
