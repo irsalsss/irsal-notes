@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { Response } from 'express';
 import { AuthService } from './auth.service';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { CreateUserDto } from '../users/dto/create-user.dto';
 import { SignInDto } from './dto/sign-in.dto';
 import {
   ApiBody,
@@ -17,9 +17,9 @@ import {
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { User } from 'src/users/entities/user.entity';
+import { User } from '../users/entities/user.entity';
 import { AuthGuard, RequestWithUser } from './auth.guard';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from '../users/users.service';
 
 export const EXPIRATION_TIME = 60 * 60 * 24 * 30 * 1000; // 30 days
 

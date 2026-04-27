@@ -15,8 +15,8 @@ import { ArticleService } from './article.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { Article } from './entities/article.entity';
-import { AuthGuard, RequestWithUser } from 'src/auth/auth.guard';
-import { AuthHelperService } from 'src/auth/auth-helper.service';
+import { AuthGuard, RequestWithUser } from '../auth/auth.guard';
+import { AuthHelperService } from '../auth/auth-helper.service';
 
 @Controller('articles')
 @ApiTags('articles')
