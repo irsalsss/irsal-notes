@@ -31,6 +31,10 @@ RUN pnpm --filter api run build
 # Deploy the API to an isolated folder with production dependencies using the --legacy flag
 RUN pnpm --filter api deploy --prod --legacy /app/out/api
 
+# Ensure dist and prisma folders are copied (pnpm deploy may skip them if git-ignored or not in files)
+RUN cp -r apps/api/dist /app/out/api/dist && \
+    cp -r apps/api/prisma /app/out/api/prisma
+
 # Generate Prisma client again in the deployed API folder
 RUN cd /app/out/api && ./node_modules/.bin/prisma generate
 
@@ -49,4 +53,4 @@ USER appuser
 EXPOSE 3001
 
 # Entry point for the API
-CMD ["sh", "-c", "pnpm run prisma:migrate:deploy && pnpm run start:prod"]
+CMD ["sh", "-c", "./node_modules/.bin/prisma migrate deploy && node dist/src/main"]
