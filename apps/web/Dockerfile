@@ -34,15 +34,18 @@ RUN adduser --system --uid 1001 appuser
 
 # Set environment for Next.js standalone
 ENV NODE_ENV=production
+# Railway injects its own PORT at runtime, but setting a default is safe
 ENV PORT=3000
+# Essential for Next.js to not bind strictly to localhost inside a container
 ENV HOSTNAME="0.0.0.0"
 
-USER appuser
+# Copy standalone build WITH specific user permissions
+COPY --from=builder --chown=appuser:nodejs /app/apps/web/.next/standalone ./
+COPY --from=builder --chown=appuser:nodejs /app/apps/web/.next/static ./apps/web/.next/static
+COPY --from=builder --chown=appuser:nodejs /app/apps/web/public ./apps/web/public
 
-# Copy standalone build
-COPY --from=builder /app/apps/web/.next/standalone ./
-COPY --from=builder /app/apps/web/.next/static ./apps/web/.next/static
-COPY --from=builder /app/apps/web/public ./apps/web/public
+# Switch to the non-root user AFTER copying files
+USER appuser
 
 EXPOSE 3000
 
