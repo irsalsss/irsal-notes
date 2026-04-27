@@ -16,14 +16,14 @@ COPY packages/ ./packages/
 COPY apps/api/package.json ./apps/api/
 COPY apps/web/package.json ./apps/web/
 
-# Install dependencies (only for api and shared packages)
+# COPY THE PRISMA SCHEMA BEFORE PNPM INSTALL
+COPY apps/api/prisma/ ./apps/api/prisma/
+
+# Install dependencies (Prisma postinstall will now succeed)
 RUN pnpm install --frozen-lockfile
 
 # Copy the rest of the api code
 COPY apps/api/ ./apps/api/
-
-# Generate Prisma client
-RUN cd apps/api && pnpm prisma generate
 
 # Build the api
 RUN pnpm --filter api run build
@@ -38,13 +38,14 @@ WORKDIR /app
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 appuser
-USER appuser
 
-COPY --from=builder /app/out/api ./
+# COPY FILES WITH CORRECT CHOWN BEFORE SWITCHING USERS
+COPY --from=builder --chown=appuser:nodejs /app/out/api ./
+
+USER appuser
 
 # Expose API port
 EXPOSE 3001
 
 # Entry point for the API
-# Run migrations before starting
 CMD ["sh", "-c", "./node_modules/.bin/prisma migrate deploy && node dist/src/main"]

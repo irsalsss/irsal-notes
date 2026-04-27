@@ -3,6 +3,9 @@ ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN npm install -g pnpm@10.33.2
 
+# 1. Install OpenSSL for Prisma
+RUN apt-get update -y && apt-get install -y openssl
+
 FROM base AS builder
 WORKDIR /app
 
@@ -17,7 +20,11 @@ COPY packages/ ./packages/
 COPY apps/api/package.json ./apps/api/
 COPY apps/web/package.json ./apps/web/
 
-# Install dependencies
+# 2. Copy the Prisma schema BEFORE running pnpm install
+# Adjust this path if your prisma folder is located somewhere else inside apps/api
+COPY apps/api/prisma/ ./apps/api/prisma/
+
+# Install dependencies (Prisma generate will now succeed!)
 RUN pnpm install --frozen-lockfile
 
 # Copy the rest of the web code
@@ -34,9 +41,7 @@ RUN adduser --system --uid 1001 appuser
 
 # Set environment for Next.js standalone
 ENV NODE_ENV=production
-# Railway injects its own PORT at runtime, but setting a default is safe
 ENV PORT=3000
-# Essential for Next.js to not bind strictly to localhost inside a container
 ENV HOSTNAME="0.0.0.0"
 
 # Copy standalone build WITH specific user permissions
