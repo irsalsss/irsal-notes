@@ -6,7 +6,7 @@ const getBaseURL = () => {
     return process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
   }
   // Client-side: Use the proxied path to share cookies via proxy
-  return process.env.NEXT_PUBLIC_API_URL || '/api';
+  return process.env.NEXT_PUBLIC_API_URL || '/proxy';
 };
 
 const baseURL = getBaseURL();

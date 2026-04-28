@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
     const apiUrl = process.env.API_URL || 'http://localhost:3001';
     return [
       {
-        source: "/api/:path*",
+        source: "/proxy/:path*",
         destination: `${apiUrl}/:path*`,
       },
     ];
