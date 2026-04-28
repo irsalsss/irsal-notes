@@ -17,9 +17,10 @@ type AuthFormData = SignInDto | SignUpDto;
 export interface AuthFormProps {
   onSubmitAuth?: (data: AuthFormData) => void;
   submitLabel: string;
+  isPending: boolean;
 }
 
-const AuthForm = ({ onSubmitAuth, submitLabel }: AuthFormProps) => {
+const AuthForm = ({ onSubmitAuth, submitLabel, isPending }: AuthFormProps) => {
   const {
     register,
     handleSubmit,
@@ -70,7 +71,7 @@ const AuthForm = ({ onSubmitAuth, submitLabel }: AuthFormProps) => {
         autoComplete="password"
       />
 
-      <SharedButton type="submit" variant="primary">
+      <SharedButton type="submit" variant="primary" disabled={isPending}>
         {submitLabel}
       </SharedButton>
     </form>

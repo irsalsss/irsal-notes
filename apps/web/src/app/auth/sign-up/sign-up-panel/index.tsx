@@ -16,7 +16,7 @@ const SignUpPanel = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const { mutate: signUp } = useAuthControllerSignUp();
+  const { mutate: signUp, isPending } = useAuthControllerSignUp();
   const handleSignUp = (data: SignUpDto) => {
     signUp(
       { data },
@@ -48,7 +48,7 @@ const SignUpPanel = () => {
       <div className={styles['content']}>
         <h1 className={styles['heading']}>Sign Up</h1>
 
-        <AuthForm onSubmitAuth={handleSignUp} submitLabel="Sign Up" />
+        <AuthForm isPending={isPending} onSubmitAuth={handleSignUp} submitLabel="Sign Up" />
 
         <div className={styles['linkContainer']}>
           Already have an account?{' '}

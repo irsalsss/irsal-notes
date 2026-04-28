@@ -13,7 +13,7 @@ import { showNotification } from '@repo/ui';
 import { useQueryClient } from '@tanstack/react-query';
 
 const SignInPanel = () => {
-  const { mutate: signIn } = useAuthControllerSignIn();
+  const { mutate: signIn, isPending } = useAuthControllerSignIn();
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -48,7 +48,7 @@ const SignInPanel = () => {
       <div className={styles['content']}>
         <h1 className={styles['heading']}>Sign In</h1>
 
-        <AuthForm onSubmitAuth={handleSignIn} submitLabel="Sign In" />
+        <AuthForm isPending={isPending} onSubmitAuth={handleSignIn} submitLabel="Sign In" />
 
         <div className={styles['linkContainer']}>
           Don&apos;t have an account?{' '}
