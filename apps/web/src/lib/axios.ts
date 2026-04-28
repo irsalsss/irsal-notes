@@ -2,10 +2,10 @@ import axios, { type AxiosRequestConfig, Method, type AxiosError } from 'axios';
 
 const getBaseURL = () => {
   if (typeof window === 'undefined') {
-    // Server-side: Use the full API URL
-    return process.env.API_URL || 'http://localhost:3001';
+    // Server-side: MUST be an absolute URL
+    return process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
   }
-  // Client-side: Use the proxied path to share cookies
+  // Client-side: Use the proxied path to share cookies via proxy
   return process.env.NEXT_PUBLIC_API_URL || '/api';
 };
 
