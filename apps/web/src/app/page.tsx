@@ -13,7 +13,6 @@ import { getCookieHeader } from '@/lib/cookies';
 const Home = async () => {
   const queryClient = getQueryClient();
   const cookieHeader = await getCookieHeader();
-  console.log('Server-side Cookie Header:', cookieHeader);
 
   const userProfile = await queryClient.fetchQuery({
     queryKey: getAuthControllerGetProfileQueryKey(),

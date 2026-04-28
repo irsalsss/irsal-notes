@@ -26,9 +26,6 @@ export class AuthGuard implements CanActivate {
     const token = this.extractToken(request);
 
     if (!token) {
-      console.log('AuthGuard: No token found');
-      console.log('Cookies:', JSON.stringify(request.cookies));
-      console.log('Headers:', JSON.stringify(request.headers));
       throw new UnauthorizedException();
     }
 
@@ -39,8 +36,7 @@ export class AuthGuard implements CanActivate {
         secret: jwtConstants.secret,
       });
       request.user = payload;
-    } catch (err) {
-      console.log('AuthGuard: JWT Verification Failed', err.message);
+    } catch {
       throw new UnauthorizedException();
     }
 
