@@ -1,6 +1,15 @@
 import axios, { type AxiosRequestConfig, Method, type AxiosError } from 'axios';
 
-const baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+const getBaseURL = () => {
+  if (typeof window === 'undefined') {
+    // Server-side: Use the full API URL
+    return process.env.API_URL || 'http://localhost:3001';
+  }
+  // Client-side: Use the proxied path to share cookies
+  return process.env.NEXT_PUBLIC_API_URL || '/api';
+};
+
+const baseURL = getBaseURL();
 
 export const AXIOS_INSTANCE = axios.create({
   baseURL,

@@ -3,10 +3,11 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   transpilePackages: ["@repo/ui"],
   async rewrites() {
+    const apiUrl = process.env.API_URL || 'http://localhost:3001';
     return [
       {
         source: "/api/:path*",
-        destination: "http://localhost:3001/:path*",
+        destination: `${apiUrl}/:path*`,
       },
     ];
   },

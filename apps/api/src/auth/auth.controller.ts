@@ -47,6 +47,7 @@ export class AuthController {
       secure: isProduction,
       sameSite: isProduction ? 'none' : 'lax',
       maxAge: EXPIRATION_TIME,
+      path: '/',
     });
 
     return { message: 'Sign up successful' };
@@ -71,6 +72,7 @@ export class AuthController {
       secure: isProduction,
       sameSite: isProduction ? 'none' : 'lax',
       maxAge: EXPIRATION_TIME,
+      path: '/',
     });
 
     return { message: 'Sign in successful' };
@@ -87,10 +89,12 @@ export class AuthController {
   @Post('sign_out')
   @ApiOkResponse({ description: 'Sign out successful' })
   signOut(@Res({ passthrough: true }) response: any) {
+    const isProduction = process.env.NODE_ENV === 'production';
     response.clearCookie('access_token', {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax',
+      path: '/',
     });
 
     return { message: 'Sign out successful' };
