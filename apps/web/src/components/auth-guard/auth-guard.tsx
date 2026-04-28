@@ -13,6 +13,7 @@ interface AuthGuardProps {
 export function AuthGuard({ children }: AuthGuardProps) {
   const router = useRouter();
   const pathname = usePathname();
+  const isAuthPage = pathname?.startsWith('/auth');
 
   const { setUserInfo } = useUserInfoStore(
     useShallow((state: UserInfoState) => ({
@@ -24,6 +25,7 @@ export function AuthGuard({ children }: AuthGuardProps) {
     query: {
       retry: false, // Don't retry on 401, just redirect
       select: (response) => response.data,
+      enabled: !isAuthPage,
     },
   });
 
@@ -34,7 +36,6 @@ export function AuthGuard({ children }: AuthGuardProps) {
   }, [data, setUserInfo]);
 
   useEffect(() => {
-    const isAuthPage = pathname?.startsWith('/auth');
     const isAuthenticated = !isError && !!data;
 
     if (!isLoading && !isAuthenticated && !isAuthPage) {

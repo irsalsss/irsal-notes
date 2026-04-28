@@ -1,6 +1,5 @@
 import axios, { type AxiosRequestConfig, Method, type AxiosError } from 'axios';
 
-const isServer = typeof window === 'undefined';
 const baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
 
 export const AXIOS_INSTANCE = axios.create({
