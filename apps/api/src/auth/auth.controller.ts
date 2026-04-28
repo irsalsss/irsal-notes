@@ -7,7 +7,6 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { Response } from 'express';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { SignInDto } from './dto/sign-in.dto';
@@ -42,11 +41,11 @@ export class AuthController {
       signUpDto.password,
     );
 
-    // Set httpOnly cookie with the access token
+    const isProduction = process.env.NODE_ENV === 'production';
     response.cookie('access_token', result.access_token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax',
       maxAge: EXPIRATION_TIME,
     });
 
@@ -66,10 +65,11 @@ export class AuthController {
     );
 
     // Set httpOnly cookie with the access token
+    const isProduction = process.env.NODE_ENV === 'production';
     response.cookie('access_token', result.access_token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax',
       maxAge: EXPIRATION_TIME,
     });
 
