@@ -16,6 +16,20 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## 🧪 Running Tests
+
+This project uses **Vitest** and **React Testing Library** for unit and component testing.
+
+```bash
+# Run unit tests
+pnpm test
+
+# Run tests with coverage
+pnpm test:cov
+```
+
+Testing configuration can be found in `vitest.config.ts`. Global mocks and setup are located in `test/setup.tsx`.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

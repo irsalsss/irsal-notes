@@ -46,6 +46,8 @@ $ pnpm run start:prod
 
 ## Run tests
 
+We aim for high reliability. Core services like `AuthService` and `UsersService` currently maintain **100% test coverage**.
+
 ```bash
 # unit tests
 $ pnpm run test

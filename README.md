@@ -82,6 +82,28 @@ Connect the repository to Vercel and set the **Root Directory** to `apps/api`. E
 
 ---
 
+## 🧪 Testing
+
+We prioritize reliability with comprehensive unit and integration tests.
+
+### Monorepo Testing Commands
+Run all tests across the entire monorepo:
+```bash
+pnpm test
+```
+
+Generate a combined coverage report:
+```bash
+pnpm test:cov
+```
+
+### Application-Specific Tests
+- **Web (`apps/web`)**: Powered by **Vitest** and **React Testing Library**.
+- **API (`apps/api`)**: Powered by **Jest**.
+- **Utils (`packages/utils`)**: Powered by **Vitest**.
+
+---
+
 ## 📖 API Documentation & Codegen
 
 - **Swagger UI**: Accessible at `/api` when the API is running.

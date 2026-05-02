@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "codegen": "orval && pnpm exec tsx scripts/fix-generated-api.ts"
+    "codegen": "orval && pnpm exec tsx scripts/fix-generated-api.ts",
+    "test": "vitest run",
+    "test:cov": "vitest run --coverage"
   },
   "dependencies": {
     "@radix-ui/react-icons": "^1.3.2",
@@ -24,15 +26,21 @@
   },
   "devDependencies": {
     "@tanstack/react-query-devtools": "^5.91.1",
-    "baseline-browser-mapping": "latest",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^6.0.1",
+    "@vitest/coverage-v8": "^4.1.5",
+    "baseline-browser-mapping": "latest",
     "eslint": "^9",
     "eslint-config-next": "16.0.10",
+    "jsdom": "^29.1.1",
     "orval": "8.0.0-rc.2",
     "tsx": "^4.20.6",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^4.1.5"
   },
   "engines": {
     "node": ">=20.9.0"
