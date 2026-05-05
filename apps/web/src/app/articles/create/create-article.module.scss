@@ -1,5 +1,6 @@
 @use "@repo/ui/styles/variables" as *;
 @use "@repo/ui/styles/typography" as *;
+@use "@repo/ui/styles/mixins" as *;
 
 .container {
   max-width: $content-max-width;
@@ -32,6 +33,11 @@
       justify-content: flex-end;
       gap: var(--spacing-4);
       margin-top: var(--spacing-4);
+
+      @include rwd('sm') {
+        flex-direction: column-reverse;
+        justify-content: flex-start;
+      }
     }
   }
 }

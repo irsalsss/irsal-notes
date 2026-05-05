@@ -4,6 +4,7 @@ import HeaderWithAuth from '@/components/header-with-auth';
 import styles from './create-article.module.scss';
 import Link from 'next/link';
 import { useForm, Controller } from 'react-hook-form';
+import { useState } from 'react';
 import {
   SharedInput,
   SharedButton,
@@ -28,16 +29,23 @@ const CreateArticlePage = () => {
     },
   });
 
+  const [isPublished, setIsPublished] = useState(true);
+
   const { mutate: createArticle } = useArticleControllerCreate({
     mutation: {
       onSuccess: () => {
-        showSuccess('Article created successfully!');
-        router.push('/articles');
+        showSuccess(
+          isPublished
+            ? 'Article published successfully!'
+            : 'Draft saved successfully!'
+        );
+        router.push(isPublished ? '/articles' : '/articles/draft');
       },
     },
   });
 
   const onSubmit = async (data: CreateArticleDto) => {
+    setIsPublished(true);
     const payload = {
       ...data,
       published: true,
@@ -90,11 +98,23 @@ const CreateArticlePage = () => {
               </SharedButton>
             </Link>
             <SharedButton
+              type="button"
+              variant="secondary"
+              disabled={isSubmitting}
+              onClick={handleSubmit((data) => {
+                setIsPublished(false);
+                createArticle({ data: { ...data, published: false } });
+              })}
+            >
+              Save as Draft
+            </SharedButton>
+            <SharedButton
               type="submit"
               variant="primary"
               disabled={isSubmitting}
+              onClick={() => setIsPublished(true)}
             >
-              {isSubmitting ? 'Publishing...' : 'Publish Article'}
+              {isSubmitting && isPublished ? 'Publishing...' : 'Publish Article'}
             </SharedButton>
           </div>
         </form>

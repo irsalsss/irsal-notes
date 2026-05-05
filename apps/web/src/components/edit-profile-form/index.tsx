@@ -13,10 +13,13 @@ import { useUsersControllerUpdate } from '@/features/api/users/users';
 import { UserInfoState, useUserInfoStore } from '@/store/user-info-store';
 import { useShallow } from 'zustand/react/shallow';
 import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 type ProfileFormData = Omit<UpdateUserDto, 'email'>;
 
 const EditProfileForm = () => {
+  const router = useRouter();
+
   const { userInfo } = useUserInfoStore(
     useShallow((state: UserInfoState) => ({
       userInfo: state.userInfo,
@@ -30,6 +33,7 @@ const EditProfileForm = () => {
           message: 'Profile updated successfully',
           variant: 'success',
         });
+        router.push('/');
       },
       onError: (error) => {
         showNotification({
