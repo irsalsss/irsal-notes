@@ -47,6 +47,9 @@ const Header = ({
           >
             About
           </Link>
+          <div className={styles['theme-toggle-container']}>
+            <ThemeToggle />
+          </div>
           <SharedPopover
             trigger={
               <button
@@ -78,10 +81,6 @@ const Header = ({
           </SharedPopover>
         </div>
       </nav>
-
-      <div className={styles['theme-toggle-container']}>
-        <ThemeToggle />
-      </div>
     </header>
   );
 };

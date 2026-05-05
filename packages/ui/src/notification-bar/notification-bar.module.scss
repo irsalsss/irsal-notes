@@ -1,72 +1,120 @@
 @use '../styles/variables' as *;
 @use '../styles/typography' as *;
 
+.toastContainer {
+  padding: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: var(--radius-lg, 0.5rem) !important;
+
+  :global(.Toastify__toast-body) {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+}
+
 .notification {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--spacing-3, 0.75rem);
   padding: var(--spacing-4, 1rem);
   border-radius: var(--radius-lg, 0.5rem);
   @include apply-typography('body-m');
-  box-shadow: var(--shadow-md);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--color-border);
   min-width: 300px;
   max-width: 500px;
+  position: relative;
+  overflow: hidden;
+
+  /* Indicator strip on the left */
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+  }
 
   &.success {
-    background-color: var(--color-success-alt);
-    color: var(--color-success-foreground);
+    &::before {
+      background-color: var(--color-success);
+    }
+    .iconWrapper {
+      color: var(--color-success);
+    }
   }
 
   &.error {
-    background-color: var(--color-error);
-    color: var(--color-error-foreground);
+    &::before {
+      background-color: var(--color-error);
+    }
+    .iconWrapper {
+      color: var(--color-error);
+    }
   }
 
   &.warning {
-    background-color: var(--color-warning);
-    color: var(--color-warning-foreground);
+    &::before {
+      background-color: var(--color-warning);
+    }
+    .iconWrapper {
+      color: var(--color-warning);
+    }
+  }
+
+  .iconWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px; // optical alignment with text
+    
+    .icon {
+      width: 20px;
+      height: 20px;
+    }
   }
 
   .content {
     flex: 1;
     display: flex;
-    align-items: center;
-    gap: var(--spacing-2, 0.5rem);
-  }
-
-  .icon {
-    display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
-    flex-shrink: 0;
   }
 
   .message {
-    flex: 1;
-    line-height: 1.5;
+    color: var(--color-foreground);
+    line-height: var(--line-height-normal);
   }
 
   .closeButton {
     background: transparent;
     border: none;
-    color: inherit;
+    color: var(--color-muted-foreground);
     cursor: pointer;
     padding: var(--spacing-1, 0.25rem);
+    margin-left: var(--spacing-2, 0.5rem);
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0.8;
-    transition: opacity 0.2s;
+    opacity: 0.7;
+    transition: var(--transition-opacity);
     flex-shrink: 0;
+    border-radius: var(--radius-sm, 0.25rem);
 
     &:hover {
       opacity: 1;
+      background-color: var(--color-hover);
+      color: var(--color-foreground);
     }
 
     &:focus-visible {
-      outline: 2px solid currentColor;
+      outline: 2px solid var(--color-focus-ring);
       outline-offset: 2px;
-      border-radius: var(--radius-sm, 0.25rem);
     }
   }
 }
